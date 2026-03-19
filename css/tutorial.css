@@ -1,0 +1,272 @@
+  #tutorialScreen {
+    position: fixed; inset: 0; z-index: 8000;
+    display: none;
+    background: #04060f;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #tutorialScreen.show { display: flex; }
+
+  .tut-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    background: rgba(0,0,0,0.4);
+    flex-shrink: 0;
+  }
+  .tut-header-title {
+    font-family: 'Press Start 2P', monospace; font-size: 11px;
+    color: var(--cyan); text-shadow: var(--glow-cyan);
+    letter-spacing: 2px;
+  }
+  .tut-header-close {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: var(--text-dim); background: none;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
+    padding: 8px 14px; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .tut-header-close:hover { color: var(--red); border-color: var(--red); }
+
+  .tut-slides-wrap {
+    flex: 1; overflow: hidden; position: relative;
+  }
+  .tut-slides {
+    display: flex; height: 100%;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  }
+  .tut-slide {
+    min-width: 100%; height: 100%;
+    display: flex; flex-direction: row;
+    align-items: stretch;
+  }
+
+  .tut-visual {
+    flex: 1; position: relative; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 110%, #0d2040 0%, transparent 70%),
+                linear-gradient(180deg, #050810 0%, #0a0f1e 50%, #0d1a28 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tut-visual-stars {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+
+  .tut-content {
+    width: 400px; flex-shrink: 0;
+    background: rgba(5,10,25,0.97);
+    border-left: 1px solid rgba(0,229,255,0.12);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 40px 36px;
+    gap: 0;
+  }
+  .tut-slide-num {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: var(--text-dim); letter-spacing: 3px; margin-bottom: 12px;
+  }
+  .tut-slide-icon {
+    font-size: 36px; margin-bottom: 14px;
+    animation: tutIconPop 0.5s ease-out;
+  }
+  @keyframes tutIconPop { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+  .tut-slide-title {
+    font-family: 'Press Start 2P', monospace; font-size: 13px;
+    color: var(--cyan); text-shadow: var(--glow-cyan);
+    margin-bottom: 14px; line-height: 1.6;
+  }
+  .tut-slide-text {
+    font-family: 'Exo 2', sans-serif; font-size: 14px;
+    color: var(--text); line-height: 1.7; margin-bottom: 20px;
+  }
+  .tut-slide-text strong { color: var(--yellow); }
+  .tut-slide-text em { color: var(--cyan); font-style: normal; }
+
+  .tut-keys {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0;
+  }
+  .tut-key {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,229,255,0.3);
+    border-radius: 6px; padding: 6px 12px;
+    font-family: 'Exo 2', sans-serif; font-size: 12px; color: var(--text);
+  }
+  .tut-key kbd {
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: var(--cyan); background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.4);
+    border-radius: 4px; padding: 3px 7px;
+  }
+
+  .tut-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    border-top: 1px solid rgba(0,229,255,0.1);
+    background: rgba(0,0,0,0.4);
+    flex-shrink: 0;
+  }
+  .tut-nav-btn {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    background: rgba(0,0,0,0.5); border: 2px solid rgba(0,229,255,0.3);
+    border-radius: 6px; padding: 10px 20px; cursor: pointer; color: var(--cyan);
+    transition: background 0.2s, border-color 0.2s; box-shadow: 3px 3px 0 #000;
+  }
+  .tut-nav-btn:hover:not(:disabled) { background: rgba(0,229,255,0.1); border-color: var(--cyan); }
+  .tut-nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .tut-nav-btn.primary {
+    background: rgba(0,229,255,0.15); border-color: var(--cyan);
+    color: var(--cyan);
+  }
+  .tut-nav-btn.finish {
+    background: rgba(57,255,20,0.15); border-color: var(--green);
+    color: var(--green);
+  }
+
+  .tut-dots {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .tut-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); cursor: pointer;
+    transition: all 0.3s;
+  }
+  .tut-dot.active {
+    background: var(--cyan); box-shadow: 0 0 8px rgba(0,229,255,0.8);
+    width: 20px; border-radius: 4px;
+  }
+
+  .tut-ufo-demo {
+    position: absolute;
+    animation: tutUFODrop 3s ease-in-out infinite;
+  }
+  @keyframes tutUFODrop {
+    0%   { transform: translateY(-40px); opacity:0; }
+    15%  { opacity: 1; }
+    60%  { transform: translateY(160px); opacity:1; }
+    80%  { transform: translateY(180px); opacity:0.5; }
+    100% { transform: translateY(-40px); opacity:0; }
+  }
+
+  .tut-keyboard-demo {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+  }
+  .tut-numrow {
+    display: flex; gap: 6px;
+  }
+  .tut-numkey {
+    width: 44px; height: 44px;
+    font-family: 'Press Start 2P', monospace; font-size: 12px;
+    color: var(--text); background: rgba(20,30,50,0.9);
+    border: 2px solid rgba(255,255,255,0.15); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+    transition: border-color 0.1s, background 0.1s;
+  }
+  .tut-numkey.lit {
+    color: var(--cyan); border-color: var(--cyan);
+    background: rgba(0,229,255,0.15);
+    box-shadow: 0 0 12px rgba(0,229,255,0.5), 0 4px 0 rgba(0,0,0,0.5);
+    animation: keyLit 0.4s ease-out;
+  }
+  @keyframes keyLit { 0%{transform:scale(1.15)} 100%{transform:scale(1)} }
+  .tut-display-demo {
+    font-family: 'Press Start 2P', monospace; font-size: 28px;
+    color: var(--cyan); text-shadow: var(--glow-cyan);
+    min-width: 120px; text-align: center;
+    background: rgba(0,0,0,0.6); border: 2px solid rgba(0,229,255,0.3);
+    border-radius: 8px; padding: 10px 20px;
+  }
+
+  .tut-laser-scene {
+    position: relative; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tut-laser-beam {
+    position: absolute;
+    width: 4px; background: linear-gradient(180deg, transparent, var(--cyan), var(--cyan));
+    border-radius: 2px;
+    box-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(0,229,255,0.5);
+    animation: laserShoot 2.5s ease-in-out infinite;
+    left: 50%; transform: translateX(-50%);
+    bottom: 35%;
+  }
+  @keyframes laserShoot {
+    0%   { height: 0; opacity: 0; bottom: 35%; }
+    10%  { opacity: 1; }
+    50%  { height: 200px; opacity: 1; }
+    70%  { height: 220px; opacity: 0.3; }
+    100% { height: 0; opacity: 0; bottom: 35%; }
+  }
+  .tut-explosion {
+    position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+    font-size: 48px;
+    animation: explAnim 2.5s ease-in-out infinite;
+  }
+  @keyframes explAnim {
+    0%,45%  { opacity:0; transform: translateX(-50%) scale(0.3); }
+    55%  { opacity:1; transform: translateX(-50%) scale(1.3); }
+    75%  { opacity:1; transform: translateX(-50%) scale(1); }
+    100% { opacity:0; transform: translateX(-50%) scale(0.3); }
+  }
+  .tut-astro-demo {
+    position: absolute; bottom: 28%; left: 50%; transform: translateX(-50%);
+  }
+
+  .tut-hud-demo {
+    display: flex; flex-direction: column; gap: 16px; align-items: center;
+  }
+  .tut-hud-row {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 8px; padding: 12px 20px; width: 280px;
+  }
+  .tut-hud-icon { font-size: 22px; }
+  .tut-hud-label {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: var(--text-dim); flex: 1;
+  }
+  .tut-hud-val {
+    font-family: 'Press Start 2P', monospace; font-size: 13px;
+    color: var(--cyan);
+  }
+  .tut-hud-val.green { color: var(--green); }
+  .tut-hud-val.red   { color: var(--red); }
+  .tut-hud-val.yellow{ color: var(--yellow); }
+
+  .tut-diff-demo {
+    display: flex; flex-direction: column; gap: 12px; align-items: center;
+  }
+  .tut-diff-card {
+    width: 300px; border-radius: 8px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 14px;
+    border: 2px solid;
+  }
+  .tut-diff-card.easy  { border-color: rgba(57,255,20,0.5); background: rgba(57,255,20,0.06); }
+  .tut-diff-card.med   { border-color: rgba(0,229,255,0.5); background: rgba(0,229,255,0.06); }
+  .tut-diff-card.hard  { border-color: rgba(255,34,68,0.5);  background: rgba(255,34,68,0.06); }
+  .tut-diff-icon { font-size: 24px; }
+  .tut-diff-info { flex: 1; }
+  .tut-diff-name {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    margin-bottom: 4px;
+  }
+  .tut-diff-card.easy  .tut-diff-name { color: var(--green); }
+  .tut-diff-card.med   .tut-diff-name { color: var(--cyan); }
+  .tut-diff-card.hard  .tut-diff-name { color: var(--red); }
+  .tut-diff-desc {
+    font-family: 'Exo 2', sans-serif; font-size: 11px; color: var(--text-dim);
+  }
+
+  .tut-skins-row {
+    display: flex; gap: 16px; align-items: flex-end; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tut-skin-mini {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    animation: tutSkinFloat var(--d,3s) ease-in-out infinite;
+    animation-delay: var(--dl,0s);
+  }
+  @keyframes tutSkinFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .tut-skin-mini-name {
+    font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--text-dim);
+  }
+

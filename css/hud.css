@@ -1,0 +1,221 @@
+  #pauseScreen { background: rgba(5,10,20,0.88); backdrop-filter: blur(4px); }
+  .pause-panel {
+    background: rgba(15,28,50,0.97); border: 4px solid #6a9fc0; border-radius: 4px;
+    padding: 28px 36px; min-width: 320px;
+    box-shadow: 0 0 40px rgba(0,100,200,0.4), 8px 8px 0 rgba(0,0,0,0.6);
+    outline: 2px solid #3a5f80; outline-offset: 3px;
+  }
+  .pause-title {
+    font-family: 'Press Start 2P', monospace; font-size: 14px; color: #a0c8e8;
+    text-shadow: 3px 3px 0 #000; margin-bottom: 22px; text-align: center; letter-spacing: 2px;
+  }
+  .pause-btn {
+    display: flex; align-items: center; gap: 14px; width: 100%;
+    padding: 13px 18px; margin-bottom: 12px; background: #2a4060;
+    border: 3px solid #5a8aaa; border-radius: 2px; cursor: pointer;
+    font-family: 'Press Start 2P', monospace; font-size: 10px; color: #d0e8f8;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: background 0.1s, border-color 0.1s, color 0.1s;
+    box-shadow: 3px 3px 0 #000;
+  }
+  .pause-btn:hover { background:#3a5878; border-color:#8ab8d8; color:#fff; }
+  .pause-btn:active { transform:translate(1px,1px); box-shadow:1px 1px 0 #000; }
+  .pause-btn .btn-icon { font-size:16px; width:22px; text-align:center; flex-shrink:0; }
+  .pause-stats {
+    margin-top: 18px; border-top: 2px solid #3a5f80; padding-top: 14px;
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: #7a9aba; line-height: 2.4; text-align: center;
+  }
+  .pause-stats .stat-title { color:#a0c8e8; font-size:9px; margin-bottom:6px; letter-spacing:2px; }
+  .pause-stats span { color:#d0e8f8; }
+
+  #gameOverScreen { background: radial-gradient(ellipse at 50% 50%, #1a0510 0%, #04060f 60%); }
+  #gameOverScreen h1 { font-family:'Press Start 2P',monospace; font-size:28px; color:var(--red); text-shadow:var(--glow-red),4px 4px 0 #000; margin-bottom:10px; }
+  #gameOverScreen .subtitle { font-family:'Press Start 2P',monospace; font-size:9px; color:var(--text-dim); margin-bottom:30px; letter-spacing:2px; }
+  @keyframes recordPop { from{transform:scale(0.5);opacity:0} to{transform:scale(1);opacity:1} }
+  @keyframes medalSpin { 0%{transform:rotate(-20deg) scale(0.5);opacity:0} 60%{transform:rotate(10deg) scale(1.2)} 100%{transform:rotate(0deg) scale(1);opacity:1} }
+  @keyframes starsAppear { from{opacity:0;transform:scale(0.3) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  @keyframes goldPulse { 0%,100%{text-shadow:0 0 20px rgba(255,215,0,0.8)} 50%{text-shadow:0 0 40px rgba(255,215,0,1),0 0 80px rgba(255,215,0,0.5)} }
+  .result-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; margin-bottom:30px; text-align:left; }
+  .result-item label { color:var(--text-dim); display:block; font-family:'Press Start 2P',monospace; font-size:7px; letter-spacing:1px; margin-bottom:4px; }
+  .result-item .val { font-family:'Press Start 2P',monospace; font-size:20px; font-weight:700; }
+  .val.cyan{color:var(--cyan);} .val.yellow{color:var(--yellow);} .val.green{color:var(--green);} .val.red{color:var(--red);}
+  .play-again-btn {
+    font-family:'Press Start 2P',monospace; font-size:11px; padding:16px 40px;
+    background:transparent; color:var(--cyan); border:3px solid var(--cyan);
+    border-radius:2px; cursor:pointer; transition:background 0.1s; box-shadow:4px 4px 0 #000;
+  }
+  .play-again-btn:hover { background:rgba(0,229,255,0.1); }
+
+  #gameArea { flex:1; position:relative; overflow:hidden; background:#000; }
+  #spaceCanvas { position:absolute; inset:0; width:100%; height:100%; }
+
+  #earth {
+    position:absolute; width:280px; height:280px; right:-60px; bottom:80px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #6dd5fa 0%, #2980b9 30%, #1a5276 60%, #0a2540 85%);
+    box-shadow:inset -20px -20px 40px rgba(0,0,0,0.7), 0 0 60px rgba(74,158,255,0.3);
+    opacity:0.7; z-index:1;
+  }
+  .earth-cloud { position:absolute; background:rgba(255,255,255,0.45); border-radius:50%; filter:blur(4px); }
+
+  #moonSurface {
+    position:absolute; bottom:0; left:0; right:0; height:120px;
+    background:linear-gradient(to bottom, #5a5a6e 0%, #3d3d4a 50%, #2a2a38 100%);
+    border-top:2px solid #4a4a60; z-index:10;
+  }
+  .crater { position:absolute; background:radial-gradient(circle,#1e1e2d 0%,#2a2a38 100%); border-radius:50%; box-shadow:inset 2px 2px 6px rgba(0,0,0,0.7); }
+
+  #base { position:absolute; bottom:120px; left:50%; transform:translateX(-50%); z-index:15; display:flex; flex-direction:column; align-items:center; }
+  .base-dome {
+    width:100px; height:55px;
+    background:linear-gradient(135deg,rgba(100,200,255,0.3) 0%,rgba(20,80,150,0.5) 100%);
+    border:2px solid rgba(0,229,255,0.5); border-bottom:none; border-radius:50px 50px 0 0;
+    box-shadow:0 0 20px rgba(0,229,255,0.2),inset 0 0 15px rgba(0,229,255,0.1); overflow:hidden;
+    position:relative;
+  }
+  .base-dome::before {
+    content:''; position:absolute; inset:4px; border-radius:50px 50px 0 0;
+    background:repeating-linear-gradient(60deg,transparent,transparent 8px,rgba(0,229,255,0.08) 8px,rgba(0,229,255,0.08) 9px);
+  }
+
+  #astronaut { position:absolute; bottom:120px; left:50%; transform:translateX(-50%); z-index:20; }
+
+  .laser {
+    position:absolute; width:3px;
+    background:linear-gradient(to top,rgba(0,229,255,0),var(--cyan));
+    border-radius:2px; z-index:25;
+    animation:laserFly 0.4s ease-out forwards; box-shadow:0 0 8px var(--cyan);
+  }
+  @keyframes laserFly { 0%{opacity:1} 100%{opacity:0;transform:translateY(-20px)} }
+
+  .ufo { position:absolute; z-index:30; display:flex; flex-direction:column; align-items:center; image-rendering:pixelated; }
+  .ufo-label { font-family:'Press Start 2P',monospace; font-size:10px; font-weight:700; color:#fff; background:rgba(0,0,0,0.85); border:2px solid; padding:5px 10px; border-radius:2px; margin-bottom:6px; white-space:nowrap; text-shadow:0 0 8px currentColor; }
+  .ufo.type1 .ufo-label { color:var(--green); border-color:rgba(57,255,20,0.6); }
+  .ufo.type2 .ufo-label { color:#ff6644; border-color:rgba(255,100,68,0.6); }
+  .ufo.type3 .ufo-label { color:var(--purple); border-color:rgba(168,85,247,0.6); }
+  .ufo.type1 .ufo-pixel-body { filter: drop-shadow(0 0 6px rgba(57,255,20,0.7)); }
+  .ufo.type2 .ufo-pixel-body { filter: drop-shadow(0 0 6px rgba(255,80,40,0.7)); }
+  .ufo.type3 .ufo-pixel-body { filter: drop-shadow(0 0 6px rgba(168,85,247,0.7)); }
+  .ufo-beam{width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-top:18px solid rgba(0,200,255,0.2);margin:0 auto;animation:beamPulse 1.5s ease-in-out infinite;filter:blur(2px);}
+  @keyframes beamPulse{0%,100%{opacity:0.3;border-top-width:18px}50%{opacity:0.7;border-top-width:24px}}
+
+  .explosion{position:absolute;pointer-events:none;z-index:50;animation:explodeAnim 0.7s ease-out forwards;font-size:48px;transform-origin:center;}
+  @keyframes explodeAnim{0%{transform:scale(0.2) rotate(0deg);opacity:1}100%{transform:scale(2.5) rotate(180deg);opacity:0}}
+  .floating-text{position:absolute;pointer-events:none;z-index:55;font-family:'Press Start 2P',monospace;font-weight:700;font-size:14px;animation:floatUp 1s ease-out forwards;}
+  @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.2)}}
+
+  #waveAnnounce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Press Start 2P',monospace;font-size:36px;font-weight:900;color:var(--cyan);text-shadow:4px 4px 0 #000,var(--glow-cyan);z-index:60;pointer-events:none;display:none;animation:waveAnim 2.5s ease-out forwards;}
+  @keyframes waveAnim{0%{opacity:0;transform:translate(-50%,-50%) scale(0.5)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}}
+
+  .flash-overlay{position:absolute;inset:0;pointer-events:none;z-index:45;opacity:0;}
+  .flash-overlay.red{background:rgba(255,30,50,0.25);animation:flashAnim 0.4s ease-out;}
+  .flash-overlay.green{background:rgba(0,255,100,0.15);animation:flashAnim 0.3s ease-out;}
+  @keyframes flashAnim{0%{opacity:1}100%{opacity:0}}
+
+  .nebula{position:absolute;border-radius:50%;filter:blur(40px);animation:nebulaDrift 20s ease-in-out infinite alternate;pointer-events:none;}
+  @keyframes nebulaDrift{0%{transform:scale(1) translateY(0)}100%{transform:scale(1.1) translateY(-15px)}}
+  .shoot-star{position:absolute;width:100px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,white 100%);border-radius:2px;animation:shootStar 1s ease-out forwards;pointer-events:none;z-index:2;}
+  @keyframes shootStar{0%{opacity:1;transform:translateX(0) translateY(0)}100%{opacity:0;transform:translateX(200px) translateY(80px)}}
+
+  #pauseBtn{position:absolute;top:10px;right:10px;z-index:35;font-family:'Press Start 2P',monospace;font-size:9px;background:rgba(10,20,40,0.8);border:2px solid #4a7a9a;color:#7aaac8;padding:8px 12px;border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 #000;transition:background 0.1s,color 0.1s;}
+  #pauseBtn:hover{background:rgba(20,40,70,0.9);color:#a0cce8;}
+
+  /* ── ABILITY HUD INDICATOR ── */
+  #abilityHud {
+    position: absolute;
+    top: 10px; left: 10px;
+    z-index: 36;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(5, 10, 25, 0.88);
+    border: 2px solid rgba(255,215,0,0.45);
+    border-radius: 4px;
+    padding: 7px 13px 7px 10px;
+    box-shadow: 0 0 16px rgba(255,215,0,0.2), 3px 3px 0 #000;
+    backdrop-filter: blur(4px);
+    animation: abilityHudIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    max-width: 240px;
+  }
+  #abilityHud.show { display: flex; }
+  @keyframes abilityHudIn {
+    from { opacity:0; transform: translateY(-10px) scale(0.9); }
+    to   { opacity:1; transform: translateY(0)    scale(1);   }
+  }
+  #abilityHud .ah-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 6px currentColor);
+    animation: abilityIconPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes abilityIconPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+  #abilityHud .ah-text { display:flex; flex-direction:column; gap:2px; min-width:0; }
+  #abilityHud .ah-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px; letter-spacing: 2px;
+    color: rgba(255,215,0,0.6);
+    text-transform: uppercase;
+  }
+  #abilityHud .ah-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px; color: #ffd700;
+    text-shadow: 0 0 10px rgba(255,215,0,0.7);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #abilityHud .ah-short {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 10px; color: rgba(255,255,255,0.65);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* Active flash when ability triggers */
+  #abilityHud.triggered {
+    animation: abilityTriggered 0.6s ease-out;
+  }
+  @keyframes abilityTriggered {
+    0%   { border-color: #ffd700; box-shadow: 0 0 30px rgba(255,215,0,0.9), 3px 3px 0 #000; }
+    100% { border-color: rgba(255,215,0,0.45); box-shadow: 0 0 16px rgba(255,215,0,0.2), 3px 3px 0 #000; }
+  }
+  /* Color overrides per ability type */
+  #abilityHud.ability-vida  { border-color: rgba(255,68,102,0.6); box-shadow: 0 0 16px rgba(255,68,102,0.2), 3px 3px 0 #000; }
+  #abilityHud.ability-vida  .ah-name { color:#ff4466; text-shadow:0 0 10px rgba(255,68,102,0.7); }
+  #abilityHud.ability-vida  .ah-label { color:rgba(255,68,102,0.6); }
+  #abilityHud.ability-delay { border-color: rgba(0,207,255,0.6); box-shadow: 0 0 16px rgba(0,207,255,0.2), 3px 3px 0 #000; }
+  #abilityHud.ability-delay .ah-name { color:#00cfff; text-shadow:0 0 10px rgba(0,207,255,0.7); }
+  #abilityHud.ability-delay .ah-label { color:rgba(0,207,255,0.6); }
+  #abilityHud.ability-speed { border-color: rgba(200,68,255,0.6); box-shadow: 0 0 16px rgba(200,68,255,0.2), 3px 3px 0 #000; }
+  #abilityHud.ability-speed .ah-name { color:#cc44ff; text-shadow:0 0 10px rgba(200,68,255,0.7); }
+  #abilityHud.ability-speed .ah-label { color:rgba(200,68,255,0.6); }
+
+  #hud{width:260px;background:linear-gradient(180deg,#060c1e 0%,#04060f 100%);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:40;position:relative;}
+  .hud-section{padding:16px 18px;border-bottom:1px solid var(--border);}
+  .hud-section-title{font-family:'Press Start 2P',monospace;font-size:7px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;}
+  .stat-row{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0;}
+  .stat-label{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--text-dim);letter-spacing:1px;}
+  .stat-val{font-family:'Press Start 2P',monospace;font-weight:700;font-size:18px;color:var(--cyan);}
+  .stat-val.big{font-size:24px;} .stat-val.green{color:var(--green);} .stat-val.red{color:var(--red);} .stat-val.small{font-size:12px;}
+  #livesDisplay{display:flex;gap:6px;flex-wrap:wrap;}
+  .life-icon{font-size:18px;animation:heartbeat 1.2s ease-in-out infinite;animation-delay:calc(var(--i)*0.2s);}
+  @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+  .wave-bar-wrap{margin-top:10px;}
+  .wave-bar-label{display:flex;justify-content:space-between;font-family:'Press Start 2P',monospace;font-size:7px;color:var(--text-dim);margin-bottom:6px;}
+  .wave-bar-bg{width:100%;height:6px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;}
+  .wave-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:10px;transition:width 0.1s linear;box-shadow:0 0 8px var(--cyan);}
+  #numpad{flex:1;display:flex;flex-direction:column;padding:16px 18px;gap:8px;}
+  #display{background:rgba(0,229,255,0.05);border:2px solid rgba(0,229,255,0.3);border-radius:4px;padding:14px;font-family:'Press Start 2P',monospace;font-size:24px;font-weight:700;color:var(--cyan);text-align:center;min-height:62px;display:flex;align-items:center;justify-content:center;letter-spacing:4px;transition:border-color 0.15s,color 0.15s;}
+  #display.wrong-shake{animation:shake 0.3s ease-out;border-color:var(--red);color:var(--red);}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  #display.correct-flash{border-color:var(--green);color:var(--green);}
+  .num-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+  .num-btn{padding:14px 5px;font-family:'Press Start 2P',monospace;font-size:14px;font-weight:700;color:var(--text);background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.15);border-radius:2px;cursor:pointer;transition:background 0.1s,border-color 0.1s;user-select:none;box-shadow:3px 3px 0 rgba(0,0,0,0.5);}
+  .num-btn:hover{background:rgba(255,255,255,0.09);}
+  .num-btn:active{transform:translate(1px,1px);background:rgba(0,229,255,0.1);box-shadow:1px 1px 0 rgba(0,0,0,0.5);}
+  .action-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .btn-clear{font-family:'Press Start 2P',monospace;font-size:8px;font-weight:700;letter-spacing:1px;padding:12px 6px;border:2px solid rgba(255,140,0,0.5);color:var(--orange);background:rgba(255,140,0,0.06);border-radius:2px;cursor:pointer;transition:background 0.1s;user-select:none;box-shadow:3px 3px 0 rgba(0,0,0,0.5);}
+  .btn-clear:hover{background:rgba(255,140,0,0.12);}
+  .btn-send{font-family:'Press Start 2P',monospace;font-size:8px;font-weight:700;letter-spacing:1px;padding:12px 6px;border:2px solid rgba(0,229,255,0.5);color:var(--cyan);background:rgba(0,229,255,0.08);border-radius:2px;cursor:pointer;transition:background 0.1s;user-select:none;box-shadow:3px 3px 0 rgba(0,0,0,0.5);}
+  .btn-send:hover{background:rgba(0,229,255,0.15);}
+  .btn-send:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(0,0,0,0.5);}
+  .acc-bar-bg{width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;margin-top:6px;}
+  .acc-bar-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--yellow),var(--green));border-radius:10px;transition:width 0.4s ease;}
+

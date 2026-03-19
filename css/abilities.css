@@ -1,0 +1,187 @@
+  /* ===== PRO SKINS SECTION ===== */
+  .pro-divider {
+    width: 100%; max-width: 780px;
+    display: flex; align-items: center; gap: 14px;
+    margin: 24px 0 16px;
+  }
+  .pro-divider-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent);
+  }
+  .pro-divider-badge {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: #000;
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+    padding: 6px 14px; border-radius: 20px; letter-spacing: 2px;
+    box-shadow: 0 0 18px rgba(255,215,0,0.5);
+    animation: proBadgePulse 2s ease-in-out infinite;
+    white-space: nowrap;
+  }
+  @keyframes proBadgePulse {
+    0%,100% { box-shadow: 0 0 18px rgba(255,215,0,0.4); }
+    50%      { box-shadow: 0 0 32px rgba(255,215,0,0.9); }
+  }
+  .pro-sub-label {
+    font-family: 'Exo 2', sans-serif; font-size: 12px;
+    color: rgba(255,255,255,0.4); text-align: center;
+    max-width: 500px; margin-bottom: 16px; line-height: 1.6;
+  }
+  .pro-sub-label span { color: #ffd700; font-weight: 700; }
+  .skin-card.pro-card {
+    cursor: pointer;
+    border-color: rgba(255,215,0,0.2);
+    background: linear-gradient(145deg, #1a1400, #0d0d00);
+    position: relative; overflow: hidden;
+  }
+  .skin-card.pro-card:hover {
+    border-color: rgba(255,215,0,0.7);
+    box-shadow: 0 0 22px rgba(255,215,0,0.35);
+    transform: translateY(-3px);
+  }
+  .skin-card.pro-card .skin-card-name { color: #ffd700; }
+  .skin-card.pro-card .skin-card-req  { color: rgba(255,215,0,0.55); font-size: 9px; }
+  .skin-card.pro-card.pro-owned { border-color: rgba(255,215,0,0.5); }
+  .skin-card.pro-card.pro-active-card {
+    border-color: #ffd700;
+    box-shadow: 0 0 28px rgba(255,215,0,0.6);
+  }
+  .pro-pix-tag {
+    display: inline-block; margin-top: 4px;
+    font-family: 'Exo 2', sans-serif; font-size: 9px; font-weight: 700;
+    color: #000; background: linear-gradient(135deg, #ffd700, #ff8c00);
+    border-radius: 4px; padding: 2px 7px;
+  }
+  .pro-task-tag {
+    display: inline-block; margin-top: 4px;
+    font-family: 'Exo 2', sans-serif; font-size: 9px; font-weight: 700;
+    color: #000; background: linear-gradient(135deg, #39ff14, #00b4d8);
+    border-radius: 4px; padding: 2px 7px;
+  }
+  .pro-task-owned-tag {
+    display: inline-block; margin-top: 4px;
+    font-family: 'Exo 2', sans-serif; font-size: 9px; font-weight: 700;
+    color: #000; background: linear-gradient(135deg, #ffd700, #ff8c00);
+    border-radius: 4px; padding: 2px 7px;
+  }
+  .pro-ability-label {
+    font-family: 'Exo 2', sans-serif; font-size: 9px;
+    color: rgba(255,215,0,0.7); margin-top: 3px; line-height: 1.3;
+  }
+  /* TASK MODAL */
+  #pixModal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+  }
+  #pixModal.hidden { display: none; }
+  .pix-box {
+    background: linear-gradient(145deg, #040e1a, #071424);
+    border: 2px solid rgba(0,229,255,0.4);
+    box-shadow: 0 0 50px rgba(0,180,255,0.18);
+    border-radius: 18px; padding: 28px 32px;
+    text-align: center; max-width: 440px; width: 92%;
+    position: relative;
+    animation: pixIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    max-height: 92vh; overflow-y: auto;
+  }
+  @keyframes pixIn { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+  .pix-crown { font-size: 32px; margin-bottom: 6px; display: block;
+    animation: crownBob 2s ease-in-out infinite; }
+  @keyframes crownBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  .pix-title {
+    font-family: 'Press Start 2P', monospace; font-size: 12px; margin-bottom: 4px;
+    background: linear-gradient(135deg, #00e5ff, #39ff14);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .pix-subtitle {
+    font-family: 'Exo 2', sans-serif; font-size: 12px;
+    color: rgba(255,255,255,0.45); margin-bottom: 16px; line-height: 1.5;
+  }
+  .pix-subtitle strong { color: #00e5ff; }
+  .pix-skin-row {
+    display: flex; align-items: center; gap: 12px; text-align: left;
+    background: rgba(0,229,255,0.05); border: 1px solid rgba(0,229,255,0.18);
+    border-radius: 10px; padding: 12px 16px; margin-bottom: 16px;
+  }
+  .pix-skin-name {
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: #00e5ff; margin-bottom: 5px;
+  }
+  .pix-skin-desc {
+    font-family: 'Exo 2', sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.5); line-height: 1.4;
+  }
+  .pix-skin-desc em { color: #39ff14; font-style: normal; font-weight: 700; }
+  /* task info box */
+  .task-info-box {
+    background: rgba(57,255,20,0.05); border: 1px solid rgba(57,255,20,0.25);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; text-align: left;
+  }
+  .task-info-box .task-label {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: #39ff14; letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .task-info-box .task-detail {
+    font-family: 'Exo 2', sans-serif; font-size: 13px;
+    color: rgba(255,255,255,0.75); line-height: 1.7;
+  }
+  .task-info-box .task-detail strong { color: #ffd700; }
+  .task-info-box .task-detail em { color: #00e5ff; font-style: normal; }
+  .task-warn {
+    font-family: 'Exo 2', sans-serif; font-size: 11px;
+    color: rgba(255,200,0,0.7); background: rgba(255,215,0,0.05);
+    border: 1px solid rgba(255,215,0,0.15); border-radius: 8px;
+    padding: 8px 12px; margin-bottom: 14px; text-align: left; line-height: 1.7;
+  }
+  .task-warn::before { content: '⚠ '; }
+  /* task progress bar */
+  .task-prog-wrap { margin-bottom: 14px; }
+  .task-prog-label {
+    display: flex; justify-content: space-between;
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: rgba(255,255,255,0.4); margin-bottom: 6px;
+  }
+  .task-prog-label span { color: #39ff14; }
+  .task-prog-bg {
+    width: 100%; height: 10px; background: rgba(255,255,255,0.07);
+    border-radius: 10px; overflow: hidden;
+  }
+  .task-prog-fill {
+    height: 100%; background: linear-gradient(90deg, #39ff14, #00e5ff);
+    border-radius: 10px; transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(57,255,20,0.5);
+  }
+  .pix-confirm {
+    width: 100%; padding: 13px;
+    font-family: 'Press Start 2P', monospace; font-size: 8px; color: #000;
+    background: linear-gradient(135deg, #39ff14, #00b4d8);
+    border: none; border-radius: 9px; cursor: pointer; margin-bottom: 8px;
+    box-shadow: 0 0 18px rgba(57,255,20,0.4);
+    animation: confirmPulse 2s ease-in-out infinite;
+    transition: transform 0.1s;
+  }
+  @keyframes confirmPulse {
+    0%,100%{box-shadow:0 0 18px rgba(57,255,20,0.3)}
+    50%{box-shadow:0 0 32px rgba(57,255,20,0.75)}
+  }
+  .pix-confirm:hover { transform: scale(1.03); }
+  .pix-confirm:disabled {
+    opacity: 0.35; cursor: not-allowed; animation: none;
+    box-shadow: none; transform: none;
+  }
+  .pix-cancel {
+    width: 100%; padding: 9px;
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: rgba(255,255,255,0.3); background: transparent;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .pix-cancel:hover { border-color: #ff4466; color: #ff4466; }
+  .pix-close-x {
+    position: absolute; top: 12px; right: 14px;
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: rgba(255,255,255,0.3); background: none; border: none; cursor: pointer;
+  }
+  .pix-close-x:hover { color: #ff4466; }
+
+
