@@ -362,18 +362,4 @@ function resetGame(){
   document.getElementById('startScreen').classList.remove('hidden');
 }
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'||e.key==='p'||e.key==='P'){
-    if(state.running&&!state.paused){pauseGame();e.preventDefault();return;}
-    if(state.paused){resumeGame();e.preventDefault();return;}
-  }
-  if(!state.running||state.paused)return;
-  if(e.key>='0'&&e.key<='9'){addDigit(e.key);e.preventDefault();}
-  else if(e.key==='Enter'){checkAnswer();e.preventDefault();}
-  else if(e.key==='Backspace'){
-    state.currentInput=state.currentInput.slice(0,-1);
-    document.getElementById('display').textContent=state.currentInput||'_';
-    e.preventDefault();
-  }
-});
-
+// keydown listener centralizado em js/ui.js
