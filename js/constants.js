@@ -32,8 +32,6 @@ let opOptionsDraft = { add:true, sub:true, mul:true, div:true, pct:false, prob:f
     const saved = localStorage.getItem('spacemath_ops');
     if(saved){ opOptions = JSON.parse(saved); opOptionsDraft = {...opOptions}; }
   } catch(e){}
-  syncOpToggles();
-  updateOpsActiveLabel();
 })();
 
 function getActiveOPS(){
@@ -47,6 +45,7 @@ let gameLoop = null;
 let spawnLoop = null;
 let shootingStarInterval = null;  // FIX 1: single shooting star interval
 let ufoIdCounter = 0;
+let _gameAreaCache = null; // DECLARATION ADDED
 let _areaDims = {w:0,h:0};
 function refreshAreaDims(){ const a=getGameArea(); if(a){ _areaDims.w=a.offsetWidth; _areaDims.h=a.offsetHeight; } }
 function getGameArea(){ if(!_gameAreaCache) _gameAreaCache = document.getElementById('gameArea'); return _gameAreaCache; }

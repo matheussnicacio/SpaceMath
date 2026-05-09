@@ -45,4 +45,28 @@
     z-index: 100; text-align: center; padding: 30px;
   }
   .screen.hidden { display: none; }
+  
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0,229,255,0.25);
+    border-radius: 10px;
+    border: 1px solid rgba(0,229,255,0.1);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,229,255,0.45);
+    box-shadow: 0 0 12px rgba(0,229,255,0.3);
+  }
+  
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,229,255,0.25) rgba(0,0,0,0.3);
+  }
 

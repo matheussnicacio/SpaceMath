@@ -373,6 +373,17 @@
     cursor: pointer;
     display: flex; align-items: center; gap: 16px;
   }
+  .alex-room-extra-badge {
+    position: absolute; top: -10px; right: 12px;
+    background: #ff2244; color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; padding: 4px 8px; border-radius: 4px;
+    box-shadow: 0 0 14px rgba(255,34,68,0.7);
+    z-index: 5;
+    animation: newBadgePop 1.6s ease-in-out infinite;
+    border: 1px solid rgba(255,255,255,0.2);
+    letter-spacing: 1px;
+  }
   .alex-room-card.locked {
     opacity: 0.45; cursor: not-allowed;
     border-color: rgba(120,120,140,0.3);
@@ -837,12 +848,12 @@
     cursor: pointer; transition: all 0.2s;
     font-size: 16px;
     position: relative;
-    box-shadow: 2px 2px 0 #000, inset 0 0 0 1px rgba(255,255,255,0.15);
+    color: #4a2a10;
   }
-  .hangar-crate::before {
-    content: ''; position: absolute; inset: 4px;
-    border: 1px dashed rgba(0,0,0,0.3);
-    border-radius: 2px;
+  .crate-svg {
+    width: 28px; height: 28px;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+    pointer-events: none;
   }
   .hangar-crate:hover {
     transform: translateY(-3px);
@@ -1318,8 +1329,8 @@
   /* Toast de feedback (sucesso/erro/dica) — usado em todas as estações */
   .alex-toast {
     position: absolute;
-    bottom: 20px; left: 50%;
-    transform: translateX(-50%) translateY(20px);
+    bottom: 20px; right: 20px;
+    transform: translateY(20px);
     padding: 12px 22px; border-radius: 10px;
     font-family: 'Press Start 2P', monospace;
     font-size: 10px;
@@ -1332,7 +1343,7 @@
     letter-spacing: 1px;
   }
   .alex-toast.show {
-    opacity: 1; transform: translateX(-50%) translateY(0);
+    opacity: 1; transform: translateY(0);
   }
   .alex-toast.success { background: rgba(57,255,20,0.92); color: #042000; }
   .alex-toast.info    { background: rgba(0,229,255,0.92); color: #001a22; }
@@ -1354,6 +1365,93 @@
     .training-key { font-size: 11px; padding: 10px 4px; }
     .ceremony-title { font-size: 16px; letter-spacing: 1px; }
     .ceremony-stats { grid-template-columns: 1fr; min-width: 260px; }
+  }
+
+  .fractions-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* ── ESTAÇÃO 6: FRAÇÕES ── */
+  .fractions-stage { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .fractions-display { text-align: center; }
+  .fractions-target { font-family: 'Press Start 2P', monospace; font-size: 32px; color: var(--yellow); display: inline-flex; flex-direction: column; align-items: center; }
+  .fractions-target .bar { border-top: 3px solid; width: 40px; margin: 4px 0 6px 0; }
+  .fractions-circle-wrap { width: 220px; height: 220px; position: relative; border-radius: 50%; border: 8px solid rgba(255,215,0,0.1); box-shadow: 0 0 40px rgba(255,215,0,0.15); }
+  .fractions-circle { width: 100%; height: 100%; position: relative; overflow: hidden; border-radius: 50%; background: rgba(255,255,255,0.05); }
+  .fractions-slice-svg {
+    fill: rgba(255, 255, 255, 0.05);
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 1px;
+    cursor: pointer;
+    transition: fill 0.3s, stroke 0.3s;
+  }
+  .fractions-slice-svg:hover {
+    fill: rgba(255, 215, 0, 0.25);
+    stroke: rgba(255, 215, 0, 0.4);
+  }
+  .fractions-slice-svg.selected {
+    fill: var(--yellow);
+    stroke: #000;
+    stroke-width: 2px;
+  }
+
+  /* ── ESTAÇÃO 7: INTEIROS ── */
+  .integers-stage { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .integers-core { width: 280px; height: 180px; background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1); border-radius: 20px; display: flex; flex-wrap: wrap; gap: 8px; padding: 15px; align-content: flex-start; overflow-y: auto; }
+  .integer-ion { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Press Start 2P', monospace; font-size: 14px; animation: ionPop 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .integer-ion.pos { background: rgba(0,229,255,0.2); border: 2px solid var(--cyan); color: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+  .integer-ion.neg { background: rgba(255,34,68,0.2); border: 2px solid var(--red); color: var(--red); box-shadow: 0 0 10px var(--red); }
+  @keyframes ionPop { from { transform: scale(0); } to { transform: scale(1); } }
+
+  /* ── ESTAÇÃO 8: GEOMETRIA ── */
+  .geometry-stage { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .geometry-canvas-wrap { background: #000; border: 2px solid var(--orange); border-radius: 10px; padding: 10px; }
+  .geometry-inputs { font-family: 'Exo 2', sans-serif; color: #fff; text-align: center; }
+
+  /* ── ESTAÇÃO 9: ÁLGEBRA ── */
+  .algebra-stage { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 45px; height: 100%; }
+  .algebra-scale-wrap { position: relative; width: 320px; height: 160px; margin-bottom: 20px; display: flex; justify-content: center; align-items: flex-end; }
+  .algebra-scale-fulcrum { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 30px solid var(--orange); }
+  .algebra-scale-beam { position: absolute; bottom: 30px; width: 260px; height: 6px; background: var(--orange); border-radius: 3px; transform-origin: center; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; justify-content: space-between; align-items: center; }
+  .algebra-scale-plate { position: absolute; top: 0; width: 80px; height: 60px; background: rgba(0,0,0,0.4); border: 2px solid var(--orange); border-top: none; border-radius: 0 0 40px 40px; transform: translateY(0); display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
+  .algebra-scale-plate.left { left: -40px; }
+  .algebra-scale-plate.right { right: -40px; }
+  .algebra-scale-plate .label { font-family: 'Press Start 2P', monospace; font-size: 16px; color: var(--yellow); text-shadow: 0 0 10px rgba(255,215,0,0.5); }
+  /* Counter-rotate plates so they stay level */
+  #algBeam { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .algebra-scale-beam .algebra-scale-plate { transform-origin: top center; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  
+  .algebra-eq { font-family: 'Press Start 2P', monospace; font-size: 28px; color: var(--yellow); text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+  .alex-input { 
+    background: rgba(0,0,0,0.6); 
+    border: 2px solid var(--orange); 
+    border-radius: 6px; 
+    padding: 12px 8px; 
+    color: #fff; 
+    font-family: 'Press Start 2P', monospace; 
+    font-size: 14px; 
+    text-align: center; 
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .alex-input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 12px rgba(255,215,0,0.3);
+  }
+  /* Hide spin buttons */
+  .alex-input::-webkit-outer-spin-button,
+  .alex-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .alex-input {
+    -moz-appearance: textfield;
+    appearance: none;
   }
 
 

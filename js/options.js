@@ -52,8 +52,12 @@ function updateOpsActiveLabel(){
   if(el) el.textContent = activeLabel || '(nenhuma)';
 }
 
-document.addEventListener('DOMContentLoaded',()=>{ updateSkinBadge(); window.addEventListener('resize', ()=>{ _gameAreaCache=null; refreshAreaDims(); }); });
-updateSkinBadge();
+document.addEventListener('DOMContentLoaded',()=>{ 
+  syncOpToggles();
+  updateOpsActiveLabel();
+  updateSkinBadge(); 
+  window.addEventListener('resize', ()=>{ _gameAreaCache=null; refreshAreaDims(); }); 
+});
 
 // ===================== ABILITY SLOT (per free skin) =====================
 // Maps free skinId → pro ability id equipped on it
