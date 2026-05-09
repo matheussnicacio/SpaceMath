@@ -1150,9 +1150,11 @@
   .training-eq-result.match { color: var(--green); text-shadow: 0 0 10px rgba(57,255,20,0.7); }
   .training-eq-result.no    { color: var(--red); }
   .training-keypad {
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px; padding: 6px 0;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 6px 0;
   }
   .training-key {
     padding: 12px 8px;
@@ -1188,6 +1190,17 @@
     background: rgba(255,34,68,0.1);
     border-color: rgba(255,34,68,0.5);
     color: var(--red);
+  }
+  .training-key.enter {
+    background: rgba(57,255,20,0.1);
+    border-color: rgba(57,255,20,0.5);
+    color: var(--green);
+    grid-column: span 4 / span 4;
+  }
+  .training-key.enter:hover {
+    background: rgba(57,255,20,0.25);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(57,255,20,0.5);
   }
   .training-solutions {
     background: rgba(0,0,0,0.4);

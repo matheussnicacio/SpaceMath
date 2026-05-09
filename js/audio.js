@@ -2227,17 +2227,23 @@
 
     var stage = document.getElementById('alexStationStage');
     var keypad = '';
-    for(var n=0; n<=9; n++){
-      keypad += '<button class="training-key" onclick="trainingKey(\'' + n + '\')">' + n + '</button>';
-    }
     keypad += '<button class="training-key op" onclick="trainingKey(\'+\')">+</button>';
-    keypad += '<button class="training-key op" onclick="trainingKey(\'-\')">−</button>';
+    keypad += '<button class="training-key op" onclick="trainingKey(\'-\')">-</button>';
     keypad += '<button class="training-key op" onclick="trainingKey(\'*\')">×</button>';
     keypad += '<button class="training-key op" onclick="trainingKey(\'/\')">÷</button>';
-    keypad += '<button class="training-key paren" onclick="trainingKey(\'(\')">(</button>';
-    keypad += '<button class="training-key paren" onclick="trainingKey(\')\')">)</button>';
-    keypad += '<button class="training-key special" onclick="trainingBack()">⌫</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 7 + '\')">' + 7 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 8 + '\')">' + 8 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 9 + '\')">' + 9 + '</button>';
     keypad += '<button class="training-key special" onclick="trainingClear()">CLR</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 4 + '\')">' + 4 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 5 + '\')">' + 5 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 6 + '\')">' + 6 + '</button>';
+    keypad += '<button class="training-key special" onclick="trainingBack()">⌫</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 1 + '\')">' + 1 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 2 + '\')">' + 2 + '</button>';
+    keypad += '<button class="training-key" onclick="trainingKey(\'' + 3 + '\')">' + 3 + '</button>';
+    keypad += '<button class="training-key zero" onclick="trainingKey(\'' + 0 + '\')">' + 0 + '</button>';
+    keypad += '<button class="training-key enter" onclick="trainingTest()">Enter</button>';
     // o último vazio para alinhar grade 5xN
 
     stage.innerHTML =
