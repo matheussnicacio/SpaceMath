@@ -27,16 +27,27 @@ const SPECIAL_OPS_LABELS = { pct:'Porcentagem', prob:'Probabilidade', stat:'Esta
 let opOptions = { add:true, sub:true, mul:true, div:true, pct:false, prob:false, stat:false, sqrt:false, med:false };
 let opOptionsDraft = { add:true, sub:true, mul:true, div:true, pct:false, prob:false, stat:false, sqrt:false, med:false };
 
+(function loadOpOptions(){
+  try {
+    const saved = localStorage.getItem('spacemath_ops');
+    if(saved){ opOptions = JSON.parse(saved); opOptionsDraft = {...opOptions}; }
+  } catch(e){}
+  syncOpToggles();
+  updateOpsActiveLabel();
+})();
+
 function getActiveOPS(){
   return Object.keys(opOptions).filter(k=>opOptions[k]).map(k=>OPS_MAP[k]);
 }
 
-// ===== GLOBAL HANDLES (evita acúmulo de intervals) =====
+// =====================================================
+// FIX: Global interval handles — prevents accumulation
+// =====================================================
 let gameLoop = null;
 let spawnLoop = null;
-let shootingStarInterval = null;
+let shootingStarInterval = null;  // FIX 1: single shooting star interval
 let ufoIdCounter = 0;
 let _areaDims = {w:0,h:0};
-let _gameAreaCache = null;
 function refreshAreaDims(){ const a=getGameArea(); if(a){ _areaDims.w=a.offsetWidth; _areaDims.h=a.offsetHeight; } }
 function getGameArea(){ if(!_gameAreaCache) _gameAreaCache = document.getElementById('gameArea'); return _gameAreaCache; }
+

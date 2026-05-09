@@ -1,4 +1,3 @@
-// ===== TUTORIAL =====
 // ===== TUTORIAL STATE =====
 let tutCurrentSlide = 0;
 const TUT_TOTAL = 6;
@@ -146,8 +145,6 @@ function startTutTypingAnim(){
   }, 500);
 })();
 
-
-// ===== PAUSE =====
 // ===== PAUSE =====
 function pauseGame(){
   if(!state.running||state.paused)return;
@@ -192,33 +189,4 @@ function goToMainMenu(){
   document.getElementById('diffOverlay').classList.remove('show');
   document.getElementById('startScreen').classList.remove('hidden');
 }
-
-
-// ===== KEYBOARD INPUT =====
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'||e.key==='p'||e.key==='P'){
-    if(state.running&&!state.paused){pauseGame();e.preventDefault();return;}
-    if(state.paused){resumeGame();e.preventDefault();return;}
-  }
-  if(!state.running||state.paused)return;
-  if(e.key>='0'&&e.key<='9'){addDigit(e.key);e.preventDefault();}
-  else if(e.key==='Enter'){checkAnswer();e.preventDefault();}
-  else if(e.key==='Backspace'){
-    state.currentInput=state.currentInput.slice(0,-1);
-    document.getElementById('display').textContent=state.currentInput||'_';
-    e.preventDefault();
-  }
-});
-
-
-// ===== CREDITS & MENU =====
-function openCredits(){ document.getElementById('creditsScreen').classList.add('show'); }
-function closeCredits(){ document.getElementById('creditsScreen').classList.remove('show'); }
-
-(function initMenuUFOs(){
-  [1,2,3].forEach((t,i)=>{
-    const el = document.getElementById('menuUfo'+(i+1));
-    if(el) el.innerHTML = buildUFOSVG(t);
-  });
-})();
 

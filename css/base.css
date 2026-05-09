@@ -46,10 +46,3 @@
   }
   .screen.hidden { display: none; }
 
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:900px){
-  #wrapper{flex-direction:column;}
-  #hud{width:100%;height:auto;border-left:none;border-top:1px solid var(--border);}
-  .start-menu-side{width:100%;}
-}

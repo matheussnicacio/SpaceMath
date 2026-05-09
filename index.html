@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SpaceMath: Defesa Lunar</title>
+<title>SpaceMath: Defesa Lunar — A História de Alex Lunar</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -37,6 +37,9 @@
       </button>
       <button class="pixel-menu-btn campaign-btn" onclick="openCampaignMap()">
         <span class="btn-icon">🌌</span> CAMPANHA
+      </button>
+      <button class="pixel-menu-btn alex-story-btn" onclick="openAlexStory()">
+        <span class="btn-icon">👨‍🚀</span> A HISTÓRIA DE ALEX LUNAR
       </button>
       <button class="pixel-menu-btn" style="border-color:rgba(168,85,247,0.6);color:#c084fc;background:rgba(168,85,247,0.06);position:relative;overflow:hidden;" onclick="openMultiversoMap()">
         <span class="btn-icon">🌀</span> MULTIVERSO
@@ -281,6 +284,77 @@
   <div class="pro-sub-label">Skins com <span>habilidades especiais</span> — desbloqueie completando <span>tarefas no jogo</span></div>
   <div class="skin-grid" id="skinGridPro" style="max-width:560px;"></div>
   <button class="skin-coll-close" onclick="closeSkinCollection()">◄ VOLTAR</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     A HISTÓRIA DE ALEX LUNAR — Telas
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Mapa da Base Lunar -->
+<div id="alexBaseMap">
+  <div class="alex-map-header">
+    <div>
+      <div class="alex-map-title">BASE LUNAR SELENE-7</div>
+      <div class="alex-map-subtitle">CADETE A. LUNAR · TREINAMENTO</div>
+    </div>
+    <button class="alex-map-back" onclick="closeAlexStory()">◄ MENU</button>
+  </div>
+
+  <div class="alex-map-progress">
+    <div class="alex-progress-label">PROGRESSO DO CADETE</div>
+    <div class="alex-progress-bar">
+      <div class="alex-progress-fill" id="alexProgressFill"></div>
+      <div class="alex-progress-text" id="alexProgressText">0 / 5 ESTAÇÕES</div>
+    </div>
+  </div>
+
+  <div class="alex-base-corridor">
+    <div class="alex-corridor-line"></div>
+    <div id="alexRoomsContainer" style="display:flex;flex-direction:column;align-items:center;width:100%;gap:0;"></div>
+  </div>
+</div>
+
+<!-- Tela de Estação (compartilhada por todas as 5 estações) -->
+<div id="alexStationScreen">
+  <div class="alex-station-header">
+    <div class="alex-station-emoji" id="alexStEmoji">⚡</div>
+    <div class="alex-station-title-block">
+      <div class="alex-station-num-label" id="alexStNumLabel">ESTAÇÃO 1 DE 5</div>
+      <div class="alex-station-title" id="alexStTitle">REATOR ENERGÉTICO</div>
+    </div>
+    <button class="alex-station-back" onclick="exitAlexStation()">◄ MAPA</button>
+  </div>
+
+  <div class="alex-dialog-bar">
+    <div class="alex-dialog-portrait" id="alexDlgPortrait">👨‍🔬</div>
+    <div class="alex-dialog-text-block">
+      <div class="alex-dialog-name" id="alexDlgName">DR. SOMA</div>
+      <div class="alex-dialog-text" id="alexDlgText"></div>
+    </div>
+    <button class="alex-dialog-skip" id="alexDlgSkip" onclick="alexDlgAdvance()">PULAR ▶</button>
+  </div>
+
+  <div class="alex-task-bar" id="alexTaskBar" style="display:none;">
+    <div class="alex-task-text" id="alexTaskText"></div>
+    <div class="alex-task-counter" id="alexTaskCounter">TAREFA 1 / 3</div>
+  </div>
+
+  <div class="alex-station-stage" id="alexStationStage"></div>
+
+  <div class="alex-toast" id="alexToast"></div>
+</div>
+
+<!-- Cerimônia de Formatura -->
+<div id="alexCeremonyScreen">
+  <div class="ceremony-medal">🏅</div>
+  <div class="ceremony-title">CAPITÃO ALEX LUNAR</div>
+  <div class="ceremony-subtitle">PROMOÇÃO OFICIAL · BASE SELENE-7</div>
+  <div class="ceremony-text" id="alexCeremonyText"></div>
+  <div class="ceremony-stats" id="alexCeremonyStats"></div>
+  <div class="ceremony-buttons">
+    <button class="alex-action-btn" onclick="alexCeremonyToMenu()">▶ MENU PRINCIPAL</button>
+    <button class="alex-action-btn cyan" onclick="openCampaignMap()">🌌 INICIAR CAMPANHA</button>
+  </div>
 </div>
 
 

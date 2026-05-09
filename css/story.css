@@ -238,3 +238,1120 @@
   .story-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; }
   .story-dot.active { background: var(--cyan); box-shadow: 0 0 8px rgba(0,229,255,0.8); width: 20px; border-radius: 4px; }
 
+  /* ═══════════════════════════════════════════════════════════════
+     A HISTÓRIA DE ALEX LUNAR — Modo prequel
+     Cadete Alex em treinamento na Base Lunar Selene-7
+     ═══════════════════════════════════════════════════════════════ */
+  .pixel-menu-btn.alex-story-btn {
+    border-color: rgba(255,140,0,0.6);
+    color: #ffb070;
+    background: rgba(255,140,0,0.06);
+    position: relative; overflow: hidden;
+  }
+  .pixel-menu-btn.alex-story-btn:hover {
+    background: rgba(255,140,0,0.14);
+    border-color: var(--orange);
+    color: #fff;
+  }
+  .pixel-menu-btn.alex-story-btn::after {
+    content: 'PREQUEL';
+    position: absolute; top: 4px; right: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px; color: #000; background: var(--orange);
+    padding: 2px 5px; border-radius: 3px;
+    animation: newBadgePop 1.6s ease-in-out infinite;
+  }
+
+  /* TELA: MAPA DA BASE LUNAR */
+  #alexBaseMap {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top, #1a0a2e 0%, #08051a 50%, #04060f 100%);
+    display: none; flex-direction: column;
+    z-index: 200; overflow: hidden;
+  }
+  #alexBaseMap.show { display: flex; }
+  #alexBaseMap::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 35% 80%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.7), transparent);
+    background-size: 200px 200px, 250px 250px, 180px 180px, 220px 220px, 240px 240px;
+    pointer-events: none;
+    animation: alexStarsTwinkle 6s ease-in-out infinite;
+  }
+  @keyframes alexStarsTwinkle {
+    0%,100% { opacity: 0.7; } 50% { opacity: 1; }
+  }
+
+  .alex-map-header {
+    flex-shrink: 0; padding: 14px 24px;
+    border-bottom: 1px solid rgba(255,140,0,0.25);
+    background: linear-gradient(180deg, rgba(255,140,0,0.08), transparent);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 5; position: relative;
+  }
+  .alex-map-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px; color: var(--orange);
+    text-shadow: 0 0 16px rgba(255,140,0,0.7), 2px 2px 0 #000;
+    letter-spacing: 2px;
+  }
+  .alex-map-subtitle {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,200,140,0.7);
+    letter-spacing: 3px; margin-top: 6px;
+  }
+  .alex-map-back {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: var(--text-dim);
+    background: transparent; border: 1px solid rgba(255,140,0,0.3);
+    padding: 8px 14px; cursor: pointer; transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .alex-map-back:hover { color: #ffb070; border-color: var(--orange); }
+
+  .alex-map-progress {
+    flex-shrink: 0; padding: 12px 24px;
+    background: rgba(255,140,0,0.04);
+    border-bottom: 1px solid rgba(255,140,0,0.15);
+    z-index: 5; position: relative;
+  }
+  .alex-progress-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(255,200,140,0.8);
+    margin-bottom: 6px; letter-spacing: 2px;
+  }
+  .alex-progress-bar {
+    height: 14px; background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,140,0,0.3);
+    border-radius: 8px; overflow: hidden; position: relative;
+  }
+  .alex-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #ffb070, var(--yellow));
+    box-shadow: 0 0 12px rgba(255,140,0,0.7);
+    transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    width: 0%;
+  }
+  .alex-progress-text {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: #fff; text-shadow: 1px 1px 0 #000;
+    letter-spacing: 2px;
+  }
+
+  /* MAPA DA BASE — corredor vertical com salas */
+  .alex-base-corridor {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    padding: 30px 20px 60px;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 5; position: relative;
+  }
+  .alex-corridor-line {
+    position: absolute; left: 50%; top: 30px; bottom: 60px;
+    width: 4px; transform: translateX(-50%);
+    background: repeating-linear-gradient(180deg,
+      rgba(255,140,0,0.4) 0 8px,
+      transparent 8px 16px);
+    z-index: 0;
+  }
+
+  .alex-room-card {
+    width: min(500px, 92%);
+    background: linear-gradient(135deg, rgba(20,15,30,0.95), rgba(30,20,50,0.9));
+    border: 2px solid rgba(255,140,0,0.25);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+    position: relative; z-index: 1;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 30px rgba(255,140,0,0.05);
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .alex-room-card.locked {
+    opacity: 0.45; cursor: not-allowed;
+    border-color: rgba(120,120,140,0.3);
+  }
+  .alex-room-card.completed {
+    border-color: rgba(57,255,20,0.5);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 30px rgba(57,255,20,0.18);
+  }
+  .alex-room-card.current {
+    border-color: var(--yellow);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 40px rgba(255,215,0,0.3);
+    animation: alexCurrentPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes alexCurrentPulse {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.025); }
+  }
+  .alex-room-card:not(.locked):hover {
+    transform: translateY(-3px);
+    border-color: var(--orange);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 40px rgba(255,140,0,0.25);
+  }
+
+  .alex-room-icon {
+    flex-shrink: 0;
+    width: 64px; height: 64px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    background: rgba(255,140,0,0.12);
+    border: 2px solid rgba(255,140,0,0.4);
+  }
+  .alex-room-card.completed .alex-room-icon {
+    background: rgba(57,255,20,0.12);
+    border-color: rgba(57,255,20,0.5);
+  }
+  .alex-room-card.locked .alex-room-icon {
+    background: rgba(80,80,100,0.15);
+    border-color: rgba(120,120,140,0.3);
+    color: #555;
+  }
+
+  .alex-room-info { flex: 1; min-width: 0; }
+  .alex-room-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,200,140,0.6);
+    letter-spacing: 2px; margin-bottom: 4px;
+  }
+  .alex-room-card.completed .alex-room-num { color: rgba(57,255,20,0.7); }
+  .alex-room-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: var(--yellow);
+    text-shadow: 1px 1px 0 #000;
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .alex-room-card.locked .alex-room-name { color: #777; }
+  .alex-room-card.completed .alex-room-name { color: #a8f88c; }
+  .alex-room-desc {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 12px; color: rgba(255,255,255,0.65);
+    line-height: 1.45;
+  }
+  .alex-room-status {
+    flex-shrink: 0; align-self: stretch;
+    display: flex; align-items: center; padding-left: 8px;
+    border-left: 1px solid rgba(255,140,0,0.15);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+  }
+  .alex-room-status.lock-icon { color: #555; }
+  .alex-room-status.check-icon { color: var(--green); text-shadow: 0 0 12px rgba(57,255,20,0.7); }
+  .alex-room-status.arrow-icon { color: var(--yellow); animation: alexArrowBob 1.4s ease-in-out infinite; }
+  @keyframes alexArrowBob {
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(4px); }
+  }
+
+  /* TELA: ESTAÇÃO/SALA — visual padrão para todas as estações */
+  #alexStationScreen {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #0e0820 0%, #060410 100%);
+    display: none; flex-direction: column;
+    z-index: 250; overflow: hidden;
+  }
+  #alexStationScreen.show { display: flex; }
+
+  .alex-station-header {
+    flex-shrink: 0; padding: 12px 22px;
+    background: linear-gradient(90deg, rgba(255,140,0,0.12), rgba(255,140,0,0.04));
+    border-bottom: 1px solid rgba(255,140,0,0.3);
+    display: flex; align-items: center; gap: 14px; z-index: 10;
+  }
+  .alex-station-emoji { font-size: 28px; }
+  .alex-station-title-block { flex: 1; }
+  .alex-station-num-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,200,140,0.7);
+    letter-spacing: 2px;
+  }
+  .alex-station-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px; color: var(--yellow);
+    text-shadow: 1px 1px 0 #000;
+    letter-spacing: 1px; margin-top: 4px;
+  }
+  .alex-station-back {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: var(--text-dim);
+    background: transparent; border: 1px solid rgba(255,140,0,0.3);
+    padding: 8px 12px; cursor: pointer; transition: all 0.2s;
+  }
+  .alex-station-back:hover { color: #ffb070; border-color: var(--orange); }
+
+  /* Diálogo do instrutor — estilo VN */
+  .alex-dialog-bar {
+    flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(20,10,30,0.98), rgba(15,8,25,0.98));
+    border-bottom: 2px solid rgba(255,140,0,0.4);
+    padding: 14px 20px;
+    display: flex; gap: 14px; align-items: flex-start;
+    min-height: 90px; z-index: 8;
+  }
+  .alex-dialog-portrait {
+    flex-shrink: 0; width: 70px; height: 70px;
+    border-radius: 10px;
+    background: rgba(255,140,0,0.1);
+    border: 2px solid var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px;
+    box-shadow: 0 0 16px rgba(255,140,0,0.3);
+  }
+  .alex-dialog-text-block { flex: 1; min-width: 0; }
+  .alex-dialog-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px; color: var(--orange);
+    text-shadow: 1px 1px 0 #000;
+    margin-bottom: 8px; letter-spacing: 1px;
+  }
+  .alex-dialog-text {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px; color: rgba(255,255,255,0.92);
+    line-height: 1.55; min-height: 22px;
+  }
+  .alex-dialog-text strong { color: var(--yellow); }
+  .alex-dialog-text em { color: var(--cyan); font-style: normal; }
+  .alex-dialog-text .acc-orange { color: var(--orange); font-weight: 700; }
+  .alex-dialog-text .acc-green { color: var(--green); font-weight: 700; }
+  .alex-dialog-cursor {
+    display: inline-block; width: 8px; height: 14px;
+    background: var(--orange); margin-left: 3px; vertical-align: middle;
+    animation: alexCursorBlink 0.7s step-end infinite;
+  }
+  @keyframes alexCursorBlink {
+    0%,50% { opacity: 1; } 51%,100% { opacity: 0; }
+  }
+  .alex-dialog-skip {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: var(--text-dim);
+    background: transparent; border: 1px solid rgba(150,150,170,0.3);
+    padding: 6px 10px; cursor: pointer; transition: all 0.2s;
+    align-self: flex-start;
+    position: relative;
+  }
+  .alex-dialog-skip:hover { color: var(--orange); border-color: var(--orange); }
+  
+  /* ── SONAR ANIMATION FOR PRÓXIMO BUTTON ── */
+  @keyframes sonarPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255,140,0,0.7),
+                  inset 0 0 0 1px rgba(150,150,170,0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(255,140,0,0),
+                  inset 0 0 0 1px rgba(255,140,0,0.6);
+    }
+    100% {
+      box-shadow: 0 0 0 16px rgba(255,140,0,0),
+                  inset 0 0 0 1px rgba(150,150,170,0.3);
+    }
+  }
+  
+  .alex-dialog-skip.sonar-active {
+    color: #ffb070;
+    border-color: rgba(255,140,0,0.6);
+    background: rgba(255,140,0,0.05);
+    animation: sonarPulse 1.2s ease-out infinite;
+  }
+
+  /* Painel de tarefa — abaixo do diálogo */
+  .alex-task-bar {
+    flex-shrink: 0; background: rgba(255,215,0,0.06);
+    border-bottom: 1px solid rgba(255,215,0,0.25);
+    padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .alex-task-text {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 13px; color: var(--yellow);
+    flex: 1; min-width: 0;
+  }
+  .alex-task-text strong { font-size: 16px; }
+  .alex-task-counter {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(255,215,0,0.8);
+    letter-spacing: 1px;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 10px; border-radius: 6px;
+    border: 1px solid rgba(255,215,0,0.3);
+  }
+
+  /* Área principal de manipulação */
+  .alex-station-stage {
+    flex: 1; overflow: hidden; position: relative;
+    display: flex; flex-direction: column;
+  }
+
+  /* Botão de ação grande */
+  .alex-action-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px; padding: 12px 22px;
+    background: rgba(255,140,0,0.15);
+    color: #ffb070;
+    border: 2px solid var(--orange);
+    cursor: pointer;
+    transition: all 0.2s; letter-spacing: 1px;
+  }
+  .alex-action-btn:hover {
+    background: rgba(255,140,0,0.3); color: #fff;
+    box-shadow: 0 0 18px rgba(255,140,0,0.5);
+  }
+  .alex-action-btn.green { color: #a8f88c; border-color: var(--green); background: rgba(57,255,20,0.1); }
+  .alex-action-btn.green:hover { background: rgba(57,255,20,0.25); color: #fff; box-shadow: 0 0 18px rgba(57,255,20,0.5); }
+  .alex-action-btn.cyan { color: #80f0ff; border-color: var(--cyan); background: rgba(0,229,255,0.1); }
+  .alex-action-btn.cyan:hover { background: rgba(0,229,255,0.25); color: #fff; box-shadow: 0 0 18px rgba(0,229,255,0.5); }
+  .alex-action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .alex-action-btn:disabled:hover { background: rgba(255,140,0,0.15); color: #ffb070; box-shadow: none; }
+
+  /* ── ESTAÇÃO 1: REATOR (linha numérica + cristais) ── */
+  .reactor-stage {
+    padding: 18px 20px; gap: 16px;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .reactor-target-display {
+    text-align: center; padding: 12px;
+    background: rgba(0,229,255,0.05);
+    border: 2px dashed rgba(0,229,255,0.3);
+    border-radius: 10px;
+  }
+  .reactor-target-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(0,229,255,0.7);
+    letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .reactor-target-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 32px; color: var(--cyan);
+    text-shadow: 0 0 18px rgba(0,229,255,0.7), 2px 2px 0 #000;
+  }
+  .reactor-current {
+    text-align: center; margin-top: 6px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: var(--yellow);
+  }
+  .reactor-current .target-num { color: var(--cyan); }
+  .reactor-numberline-wrap {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; min-height: 100px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,140,0,0.2);
+    border-radius: 12px; padding: 16px 12px;
+  }
+  .reactor-numberline {
+    position: relative; height: 60px; margin: 0 auto;
+    width: 95%; max-width: 700px;
+  }
+  .reactor-numberline-track {
+    position: absolute; left: 0; right: 0; top: 50%;
+    height: 4px; background: rgba(255,255,255,0.15);
+    transform: translateY(-50%); border-radius: 2px;
+  }
+  .reactor-numberline-fill {
+    position: absolute; left: 0; top: 50%;
+    height: 6px; background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green));
+    transform: translateY(-50%); border-radius: 3px;
+    box-shadow: 0 0 14px rgba(255,200,80,0.7);
+    transition: width 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .reactor-numberline-tick {
+    position: absolute; top: 50%;
+    width: 2px; height: 14px;
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-50%);
+  }
+  .reactor-numberline-tick.major { height: 22px; background: rgba(255,255,255,0.5); }
+  .reactor-numberline-label {
+    position: absolute; top: calc(50% + 18px);
+    transform: translateX(-50%);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+  }
+  .reactor-numberline-marker {
+    position: absolute; top: 50%;
+    width: 18px; height: 18px;
+    background: var(--cyan); border: 2px solid #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 14px rgba(0,229,255,0.9);
+    transition: left 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 3;
+  }
+  .reactor-numberline-target {
+    position: absolute; top: 50%;
+    width: 22px; height: 22px;
+    background: transparent;
+    border: 3px solid var(--yellow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px rgba(255,215,0,0.8);
+    animation: reactorTargetPulse 1.4s ease-in-out infinite;
+    z-index: 2;
+  }
+  @keyframes reactorTargetPulse {
+    0%,100% { transform: translate(-50%,-50%) scale(1); }
+    50%     { transform: translate(-50%,-50%) scale(1.18); }
+  }
+
+  .reactor-crystals-row {
+    display: flex; justify-content: center; gap: 10px;
+    flex-wrap: wrap; padding: 8px;
+  }
+  .reactor-crystal {
+    cursor: pointer;
+    width: 64px; height: 72px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(0,150,200,0.08));
+    border: 2px solid var(--cyan);
+    border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2px;
+    transition: all 0.18s;
+    position: relative;
+  }
+  .reactor-crystal:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,229,255,0.5);
+  }
+  .reactor-crystal:active { transform: translateY(0); }
+  .reactor-crystal-icon { font-size: 26px; line-height: 1; }
+  .reactor-crystal-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: #fff;
+    text-shadow: 1px 1px 0 #000;
+  }
+  .reactor-crystal-add {
+    position: absolute; top: -8px; right: -8px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--green); color: #000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #000;
+  }
+  .reactor-history {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,140,0,0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+    min-height: 50px;
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .reactor-history-empty {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 12px; color: var(--text-dim);
+    font-style: italic; width: 100%; text-align: center;
+  }
+  .reactor-history-chip {
+    background: rgba(0,229,255,0.15);
+    border: 1px solid var(--cyan);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    padding: 5px 9px; border-radius: 6px;
+    display: flex; align-items: center; gap: 4px;
+    animation: reactorChipIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes reactorChipIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .reactor-history-chip-x {
+    cursor: pointer; color: var(--red);
+    margin-left: 2px;
+  }
+  .reactor-history-plus {
+    color: var(--yellow);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+  }
+  .reactor-controls {
+    display: flex; justify-content: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  .reactor-solutions-found {
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(255,200,140,0.7);
+    letter-spacing: 1px;
+  }
+  .reactor-solutions-found .acc { color: var(--green); }
+
+  /* ── ESTAÇÃO 2: HANGAR (subtração via remoção visual) ── */
+  .hangar-stage {
+    padding: 18px 20px; gap: 14px;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .hangar-counter-row {
+    display: flex; justify-content: space-around;
+    background: rgba(0,0,0,0.4);
+    border: 2px solid rgba(255,140,0,0.25);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+  .hangar-counter-block { flex: 1; }
+  .hangar-counter-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,200,140,0.7);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .hangar-counter-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px; color: var(--yellow);
+    text-shadow: 0 0 14px rgba(255,215,0,0.6), 2px 2px 0 #000;
+  }
+  .hangar-counter-value.target { color: var(--orange); }
+  .hangar-counter-value.remaining { color: var(--cyan); }
+  .hangar-counter-arrow {
+    align-self: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px; color: rgba(255,140,0,0.5);
+  }
+  .hangar-area {
+    flex: 1; min-height: 100px;
+    background:
+      repeating-linear-gradient(45deg,
+        rgba(255,140,0,0.04) 0 8px,
+        transparent 8px 16px),
+      rgba(0,0,0,0.35);
+    border: 2px dashed rgba(255,140,0,0.3);
+    border-radius: 12px;
+    padding: 14px;
+    overflow-y: auto;
+    display: flex; flex-wrap: wrap; align-content: flex-start;
+    gap: 6px;
+  }
+  .hangar-crate {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, #d4a060, #8a6030);
+    border: 2px solid #5a3010;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s;
+    font-size: 16px;
+    position: relative;
+    box-shadow: 2px 2px 0 #000, inset 0 0 0 1px rgba(255,255,255,0.15);
+  }
+  .hangar-crate::before {
+    content: ''; position: absolute; inset: 4px;
+    border: 1px dashed rgba(0,0,0,0.3);
+    border-radius: 2px;
+  }
+  .hangar-crate:hover {
+    transform: translateY(-3px);
+    box-shadow: 4px 5px 0 #000, 0 0 14px rgba(255,140,0,0.5);
+  }
+  .hangar-crate.selected {
+    background: linear-gradient(135deg, #ffd070, #d09030);
+    border-color: var(--orange);
+    box-shadow: 2px 2px 0 #000, 0 0 14px rgba(255,140,0,0.7);
+    transform: translateY(-2px);
+  }
+  .hangar-crate.removing {
+    animation: hangarCrateRemove 0.5s cubic-bezier(0.4,0,1,1) forwards;
+  }
+  @keyframes hangarCrateRemove {
+    0%   { opacity: 1; transform: scale(1) translateY(0); }
+    60%  { opacity: 1; transform: scale(0.6) translateY(-30px); filter: hue-rotate(180deg); }
+    100% { opacity: 0; transform: scale(0) translateY(-80px); filter: hue-rotate(180deg); }
+  }
+  .hangar-controls {
+    display: flex; justify-content: center; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .hangar-strategy-tip {
+    font-family: 'Exo 2', sans-serif; font-size: 11px;
+    color: rgba(255,200,140,0.7); text-align: center;
+    font-style: italic;
+  }
+
+  /* ── ESTAÇÃO 3: LABORATÓRIO (multiplicação como área) ── */
+  .lab-stage {
+    padding: 18px 20px; gap: 14px;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .lab-target-display {
+    text-align: center; padding: 12px;
+    background: rgba(168,85,247,0.06);
+    border: 2px dashed rgba(168,85,247,0.4);
+    border-radius: 10px;
+  }
+  .lab-target-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(200,160,255,0.8);
+    margin-bottom: 6px; letter-spacing: 2px;
+  }
+  .lab-target-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px; color: var(--purple);
+    text-shadow: 0 0 18px rgba(168,85,247,0.7), 2px 2px 0 #000;
+  }
+  .lab-controls-row {
+    display: flex; justify-content: center; gap: 18px;
+    flex-wrap: wrap; padding: 8px 0;
+  }
+  .lab-dim-control {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(168,85,247,0.4);
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .lab-dim-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(200,160,255,0.9);
+    letter-spacing: 1px;
+  }
+  .lab-dim-btn {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(168,85,247,0.2);
+    border: 1px solid rgba(168,85,247,0.6);
+    color: #fff; cursor: pointer; transition: all 0.15s;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lab-dim-btn:hover { background: rgba(168,85,247,0.4); }
+  .lab-dim-btn:active { transform: scale(0.92); }
+  .lab-dim-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px; color: var(--purple);
+    min-width: 26px; text-align: center;
+  }
+  .lab-eq-display {
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px; color: #fff;
+    padding: 6px;
+  }
+  .lab-eq-display .l-num { color: var(--purple); }
+  .lab-eq-display .l-eq  { color: var(--yellow); }
+  .lab-eq-display .l-res { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,0.6); }
+  .lab-eq-display .l-res.match { color: var(--green); text-shadow: 0 0 14px rgba(57,255,20,0.7); }
+
+  .lab-grid-area {
+    flex: 1; min-height: 100px;
+    background:
+      radial-gradient(ellipse at center, rgba(168,85,247,0.04), transparent 70%),
+      rgba(0,0,0,0.35);
+    border: 1px solid rgba(168,85,247,0.25);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: auto;
+  }
+  .lab-grid {
+    display: grid; gap: 4px;
+    padding: 4px;
+  }
+  .lab-cell {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, rgba(168,85,247,0.4), rgba(120,40,200,0.6));
+    border: 1px solid rgba(200,160,255,0.6);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 0 4px rgba(168,85,247,0.4);
+    animation: labCellPop 0.25s cubic-bezier(0.34,1.56,0.64,1) backwards;
+  }
+  @keyframes labCellPop {
+    from { opacity: 0; transform: scale(0); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .lab-discoveries {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 10px;
+    padding: 8px 12px;
+    max-height: 70px; overflow-y: auto;
+  }
+  .lab-discoveries-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(200,160,255,0.7);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .lab-discoveries-chips {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .lab-disc-chip {
+    background: rgba(168,85,247,0.2);
+    border: 1px solid rgba(200,160,255,0.5);
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 4px 8px; border-radius: 4px;
+    animation: reactorChipIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .lab-controls {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+
+  /* ── ESTAÇÃO 4: COMUNICAÇÃO (divisão = distribuir antenas) ── */
+  .comms-stage {
+    padding: 18px 20px; gap: 14px;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .comms-info-row {
+    display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;
+    background: rgba(0,0,0,0.4);
+    border: 2px solid rgba(0,229,255,0.25);
+    border-radius: 12px;
+    padding: 10px;
+  }
+  .comms-info-block {
+    flex: 1; min-width: 100px; text-align: center;
+  }
+  .comms-info-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(150,220,255,0.7);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .comms-info-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 22px; color: var(--cyan);
+    text-shadow: 0 0 12px rgba(0,229,255,0.6), 2px 2px 0 #000;
+  }
+  .comms-info-value.left { color: var(--orange); }
+  .comms-info-value.each { color: var(--green); }
+  .comms-info-value.rest { color: var(--red); }
+  .comms-stockpile {
+    background: rgba(0,0,0,0.35);
+    border: 2px dashed rgba(0,229,255,0.35);
+    border-radius: 10px;
+    padding: 12px; min-height: 70px;
+  }
+  .comms-stockpile-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(150,220,255,0.7);
+    margin-bottom: 8px; letter-spacing: 1px;
+  }
+  .comms-stockpile-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center; align-items: center;
+  }
+  .comms-antenna {
+    width: 30px; height: 36px;
+    cursor: grab;
+    transition: all 0.18s;
+    position: relative;
+  }
+  .comms-antenna::before {
+    content: '📡'; font-size: 22px;
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .comms-antenna:hover { transform: translateY(-3px) scale(1.1); }
+  .comms-antenna.placing {
+    animation: commsAntennaPlace 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  @keyframes commsAntennaPlace {
+    to { opacity: 0; transform: scale(0.4) translateY(40px); }
+  }
+  .comms-colonies {
+    flex: 1; min-height: 120px;
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    overflow-y: auto;
+  }
+  .comms-colony {
+    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,80,140,0.05));
+    border: 2px solid rgba(0,229,255,0.4);
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    min-height: 100px;
+  }
+  .comms-colony:hover {
+    border-color: var(--cyan);
+    box-shadow: 0 0 14px rgba(0,229,255,0.4);
+  }
+  .comms-colony.equal {
+    border-color: var(--green);
+    box-shadow: 0 0 16px rgba(57,255,20,0.4);
+  }
+  .comms-colony-icon { font-size: 26px; }
+  .comms-colony-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: var(--cyan);
+    letter-spacing: 1px;
+  }
+  .comms-colony.equal .comms-colony-name { color: var(--green); }
+  .comms-colony-count {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px; color: #fff;
+    margin-top: 2px;
+  }
+  .comms-colony-antennas {
+    display: flex; gap: 2px; flex-wrap: wrap; justify-content: center;
+    min-height: 18px;
+  }
+  .comms-colony-antennas span { font-size: 12px; }
+  .comms-controls {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+
+  /* ── ESTAÇÃO 5: SALA DE TREINAMENTO (sandbox - construir equação) ── */
+  .training-stage {
+    padding: 18px 20px; gap: 14px;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .training-target-display {
+    text-align: center; padding: 12px;
+    background: rgba(255,215,0,0.06);
+    border: 2px dashed rgba(255,215,0,0.4);
+    border-radius: 10px;
+  }
+  .training-target-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px; color: rgba(255,215,0,0.8);
+    margin-bottom: 6px; letter-spacing: 2px;
+  }
+  .training-target-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 30px; color: var(--yellow);
+    text-shadow: 0 0 18px rgba(255,215,0,0.7), 2px 2px 0 #000;
+  }
+  .training-equation-display {
+    background: rgba(0,0,0,0.5);
+    border: 2px solid rgba(255,215,0,0.4);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    min-height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 4px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px; color: #fff;
+  }
+  .training-eq-empty {
+    color: var(--text-dim); font-style: italic;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 13px; font-weight: normal;
+  }
+  .training-eq-token {
+    padding: 4px 8px; border-radius: 4px;
+    background: rgba(255,215,0,0.1);
+  }
+  .training-eq-num { color: var(--cyan); }
+  .training-eq-op  { color: var(--orange); }
+  .training-eq-result {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px; margin-left: 6px;
+  }
+  .training-eq-result.match { color: var(--green); text-shadow: 0 0 10px rgba(57,255,20,0.7); }
+  .training-eq-result.no    { color: var(--red); }
+  .training-keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px; padding: 6px 0;
+  }
+  .training-key {
+    padding: 12px 8px;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.5);
+    color: var(--cyan);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 12px; cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 6px;
+  }
+  .training-key:hover {
+    background: rgba(0,229,255,0.25);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0,229,255,0.5);
+  }
+  .training-key:active { transform: scale(0.94); }
+  .training-key.op {
+    background: rgba(255,140,0,0.1);
+    border-color: rgba(255,140,0,0.5);
+    color: var(--orange);
+  }
+  .training-key.op:hover {
+    background: rgba(255,140,0,0.25); color: #fff;
+    box-shadow: 0 0 10px rgba(255,140,0,0.5);
+  }
+  .training-key.paren {
+    background: rgba(168,85,247,0.1);
+    border-color: rgba(168,85,247,0.5);
+    color: var(--purple);
+  }
+  .training-key.special {
+    background: rgba(255,34,68,0.1);
+    border-color: rgba(255,34,68,0.5);
+    color: var(--red);
+  }
+  .training-solutions {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(57,255,20,0.3);
+    border-radius: 10px;
+    padding: 8px 12px;
+    max-height: 80px; overflow-y: auto;
+  }
+  .training-sol-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(170,255,140,0.8);
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .training-sol-chips {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .training-sol-chip {
+    background: rgba(57,255,20,0.15);
+    border: 1px solid rgba(57,255,20,0.5);
+    color: #d8ffc8;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 4px 8px; border-radius: 4px;
+    animation: reactorChipIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .training-controls {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+  .training-rank {
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px; color: var(--yellow);
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255,215,0,0.6);
+  }
+  .training-rank .num { color: var(--green); font-size: 11px; }
+
+  /* TELA: CERIMÔNIA FINAL */
+  #alexCeremonyScreen {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, #1a1030 0%, #060410 70%);
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 300; padding: 30px; overflow: hidden;
+    text-align: center;
+  }
+  #alexCeremonyScreen.show { display: flex; }
+  .ceremony-medal {
+    font-size: 80px;
+    animation: ceremonyMedalSpin 4s ease-in-out infinite;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 0 28px rgba(255,215,0,0.7));
+  }
+  @keyframes ceremonyMedalSpin {
+    0%,100% { transform: rotate(-8deg) scale(1); }
+    50%     { transform: rotate(8deg) scale(1.1); }
+  }
+  .ceremony-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 22px;
+    background: linear-gradient(90deg, var(--yellow), var(--orange), var(--yellow));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: ceremonyShimmer 3s linear infinite;
+    letter-spacing: 3px;
+    text-shadow: 0 0 30px rgba(255,215,0,0.5);
+    margin-bottom: 20px;
+  }
+  @keyframes ceremonyShimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  .ceremony-subtitle {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: var(--cyan);
+    letter-spacing: 2px; margin-bottom: 24px;
+    max-width: 600px; line-height: 1.6;
+  }
+  .ceremony-text {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 15px; color: rgba(255,255,255,0.85);
+    line-height: 1.7; max-width: 620px;
+    margin-bottom: 22px;
+  }
+  .ceremony-text strong { color: var(--yellow); }
+  .ceremony-text em { color: var(--cyan); font-style: normal; }
+  .ceremony-stats {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,215,0,0.4);
+    border-radius: 12px;
+    padding: 14px 22px;
+    margin-bottom: 22px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 24px;
+    min-width: 320px;
+  }
+  .ceremony-stat-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 7px; color: rgba(255,200,140,0.7);
+    text-align: left; letter-spacing: 1px;
+  }
+  .ceremony-stat-value {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px; color: var(--yellow);
+    text-align: right;
+  }
+  .ceremony-buttons {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+
+  /* Toast de feedback (sucesso/erro/dica) — usado em todas as estações */
+  .alex-toast {
+    position: absolute;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 12px 22px; border-radius: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 10px;
+    color: #fff;
+    z-index: 999; opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    text-align: center; max-width: 90%;
+    letter-spacing: 1px;
+  }
+  .alex-toast.show {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+  }
+  .alex-toast.success { background: rgba(57,255,20,0.92); color: #042000; }
+  .alex-toast.info    { background: rgba(0,229,255,0.92); color: #001a22; }
+  .alex-toast.warn    { background: rgba(255,140,0,0.92); color: #200a00; }
+  .alex-toast.error   { background: rgba(255,34,68,0.92); }
+
+  /* Responsivo - mobile */
+  @media (max-width: 700px) {
+    .alex-map-title { font-size: 11px; }
+    .alex-room-card { padding: 12px 14px; gap: 10px; }
+    .alex-room-icon { width: 50px; height: 50px; font-size: 28px; }
+    .alex-room-name { font-size: 9px; }
+    .alex-room-desc { font-size: 11px; }
+    .alex-station-title { font-size: 10px; }
+    .alex-dialog-portrait { width: 56px; height: 56px; font-size: 30px; }
+    .alex-dialog-text { font-size: 12px; }
+    .reactor-target-value { font-size: 24px; }
+    .reactor-crystal { width: 54px; height: 60px; }
+    .training-key { font-size: 11px; padding: 10px 4px; }
+    .ceremony-title { font-size: 16px; letter-spacing: 1px; }
+    .ceremony-stats { grid-template-columns: 1fr; min-width: 260px; }
+  }
+
+
+  /* ===== MULTIVERSE HOVER STYLES ===== */
+  .mv-close-btn:hover{background:rgba(255,255,255,0.08)!important;color:#fff!important;border-color:#888!important;}
+  .mv-card-playable:hover{border-color:rgba(168,85,247,0.7)!important;background:rgba(168,85,247,0.12)!important;transform:translateY(-2px);box-shadow:0 6px 24px rgba(168,85,247,0.25)!important;}
+  .mv-card-done:hover{background:rgba(168,85,247,0.16)!important;transform:translateY(-2px);}
+  .mv-card-playable,.mv-card-done{transition:all 0.18s ease!important;}
+  .mv-btn-primary{font-family:'Press Start 2P',monospace;font-size:9px;color:#000;background:linear-gradient(135deg,#a855f7,#7c3aed);border:none;border-radius:6px;padding:12px 20px;cursor:pointer;margin-right:8px;box-shadow:0 0 20px rgba(168,85,247,0.5);transition:filter 0.15s,transform 0.1s;}
+  .mv-btn-primary:hover{filter:brightness(1.2);transform:translateY(-1px);}
+  .mv-btn-secondary{font-family:'Press Start 2P',monospace;font-size:9px;color:#c084fc;background:transparent;border:2px solid rgba(168,85,247,0.4);border-radius:6px;padding:12px 16px;cursor:pointer;transition:background 0.15s,border-color 0.15s,transform 0.1s;}
+  .mv-btn-secondary:hover{background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.7);transform:translateY(-1px);}
+  .mv-skip-btn:hover{color:#fff!important;border-color:#666!important;background:rgba(255,255,255,0.06)!important;}
+  .mv-nav-btn:hover:not(:disabled){background:rgba(168,85,247,0.25)!important;border-color:#a855f7!important;}

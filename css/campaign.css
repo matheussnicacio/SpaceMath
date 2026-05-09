@@ -480,3 +480,9 @@
   #campHudBar .camp-hud-wave { color: #ffd700; }
   #campHudBar .camp-hud-slash { color: rgba(255,255,255,0.3); }
 
+  @media(max-width:900px){
+    #wrapper{flex-direction:column;}
+    #hud{width:100%;height:auto;border-left:none;border-top:1px solid var(--border);}
+    .start-menu-side{width:100%;}
+  }
+
