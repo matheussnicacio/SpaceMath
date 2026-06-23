@@ -70,3 +70,18 @@
     scrollbar-color: rgba(0,229,255,0.25) rgba(0,0,0,0.3);
   }
 
+  /* Pulsar — botões "Próximo" / "Próxima" */
+  @keyframes btnPulsar {
+    0%, 100% {
+      box-shadow: 3px 3px 0 #000, 0 0 0 0 currentColor;
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 3px 3px 0 #000, 0 0 16px 2px currentColor;
+      transform: scale(1.03);
+    }
+  }
+  .btn-pulsar:not(:disabled) {
+    animation: btnPulsar 1.6s ease-in-out infinite;
+  }
+

@@ -268,13 +268,9 @@ tickWave = function(){
   if(state.waveTime>=wMax) advanceWave();
 };
 
-// Patch gameOver to revoke task skin + handle campaign + MV
+// Patch gameOver to revoke task skin + handle campaign
 var _origGameOver = gameOver;
 gameOver = function(){
-  // Multiverso cleanup
-  if(typeof mvState!=='undefined' && mvState.inProgress){
-    mvCleanupOnExit();
-  }
   proOnGameEnd();
   // Campaign cleanup
   if(state._campPhaseId){
@@ -285,13 +281,9 @@ gameOver = function(){
   _origGameOver();
 };
 
-// Patch goToMainMenu to revoke task skin + campaign + MV cleanup
+// Patch goToMainMenu to revoke task skin + campaign cleanup
 var _origGoToMainMenu = goToMainMenu;
 goToMainMenu = function(){
-  // Multiverso cleanup
-  if(typeof mvState!=='undefined' && mvState.inProgress){
-    mvCleanupOnExit();
-  }
   proOnGameEnd();
   // Campaign cleanup
   if(state._campPhaseId){

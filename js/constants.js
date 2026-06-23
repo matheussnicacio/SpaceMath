@@ -1,10 +1,19 @@
-// ===== PIXEL STARS =====
+// ===== PIXEL STARS (menu) =====
 (function(){
   const c=document.getElementById('pixelStars');
-  for(let i=0;i<80;i++){
-    const s=document.createElement('div'); s.className='px-star';
-    const sz=Math.random()<0.3?3:Math.random()<0.5?2:1;
-    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*80}%;--d:${(1.5+Math.random()*3).toFixed(1)}s;--dl:${(Math.random()*3).toFixed(1)}s;position:absolute;z-index:1;`;
+  if(!c) return;
+  const colors=['star-white','star-yellow','star-cyan','star-pink','star-purple'];
+  const weights=[0.35,0.2,0.2,0.15,0.1];
+  function pickColor(){
+    const r=Math.random(); let acc=0;
+    for(let i=0;i<colors.length;i++){ acc+=weights[i]; if(r<acc) return colors[i]; }
+    return colors[0];
+  }
+  for(let i=0;i<110;i++){
+    const s=document.createElement('div');
+    s.className='px-star '+pickColor();
+    const sz=Math.random()<0.15?4:Math.random()<0.35?3:Math.random()<0.55?2:1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*82}%;--d:${(1.2+Math.random()*2.8).toFixed(1)}s;--dl:${(Math.random()*4).toFixed(1)}s;position:absolute;z-index:1;`;
     c.appendChild(s);
   }
 })();
@@ -22,7 +31,7 @@ const DIFF={
   medium:{min:1,max:20, speed:0.7, spawn:3000,maxUfos:4,lives:3},
   hard:  {min:1,max:50, speed:1.1, spawn:2200,maxUfos:5,lives:2},
 };
-const OPS_MAP = { add:'+', sub:'-', mul:'×', div:'÷', pct:'%', prob:'P', stat:'σ', sqrt:'√', med:'m' };
+const OPS_MAP = { add:'+', sub:'-', mul:'×', div:'/', pct:'%', prob:'P', stat:'σ', sqrt:'√', med:'m' };
 const SPECIAL_OPS_LABELS = { pct:'Porcentagem', prob:'Probabilidade', stat:'Estatística', sqrt:'Raiz Quadrada', med:'Grandezas' };
 let opOptions = { add:true, sub:true, mul:true, div:true, pct:false, prob:false, stat:false, sqrt:false, med:false };
 let opOptionsDraft = { add:true, sub:true, mul:true, div:true, pct:false, prob:false, stat:false, sqrt:false, med:false };

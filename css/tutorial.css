@@ -111,10 +111,11 @@
     transition: background 0.2s, border-color 0.2s; box-shadow: 3px 3px 0 #000;
   }
   .tut-nav-btn:hover:not(:disabled) { background: rgba(0,229,255,0.1); border-color: var(--cyan); }
-  .tut-nav-btn:disabled { opacity: 0.3; cursor: default; }
-  .tut-nav-btn.primary {
+  .tut-nav-btn:disabled { opacity: 0.3; cursor: default; animation: none; }
+  .tut-nav-btn.primary:not(:disabled) {
     background: rgba(0,229,255,0.15); border-color: var(--cyan);
     color: var(--cyan);
+    animation: btnPulsar 1.6s ease-in-out infinite;
   }
   .tut-nav-btn.finish {
     background: rgba(57,255,20,0.15); border-color: var(--green);

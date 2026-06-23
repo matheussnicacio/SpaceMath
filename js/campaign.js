@@ -192,12 +192,18 @@ function saveCampState(){
   try { localStorage.setItem('spacemath_campaign_v1', JSON.stringify({currentPhase:campState.currentPhase,completedPhases:campState.completedPhases,unlockedSkins:campState.unlockedSkins})); } catch(e){}
 }
 
+function _getLastAvailableCampPhaseIndex(){
+  const maxIdx = CAMPAIGN_PHASES.length - 1;
+  return Math.min(Math.max(0, campState.currentPhase), maxIdx);
+}
+
 // --- OPEN / CLOSE MAP ---
 function openCampaignMap(){
   document.getElementById('startScreen').classList.add('hidden');
   renderCampaignMap();
   initCampStars();
   document.getElementById('campaignMapScreen').classList.add('show');
+  showPlanetInfo(_getLastAvailableCampPhaseIndex());
 }
 function closeCampaignMap(){
   document.getElementById('campaignMapScreen').classList.remove('show');
@@ -345,23 +351,10 @@ function _startCampGamePhase(ph){
 const _campOrigAdvance = advanceWave;
 advanceWave = function(){
   if(state._campPhaseId){
-    // Check if this is a Multiverso phase
-    var isMvPhase = typeof mvState!=='undefined' && mvState.inProgress && mvState.currentPhaseId === state._campPhaseId;
-    // Campaign mode
     state._campWavesDone++;
-    if(!isMvPhase){
-      document.getElementById('campHudWaveNum').textContent=(state.wave+1).toString();
-    } else {
-      document.getElementById('mvHudWaveNum').textContent=Math.min(state.wave+1,3);
-    }
+    document.getElementById('campHudWaveNum').textContent=(state.wave+1).toString();
     if(state._campWavesDone >= state._campTotalWaves){
-      if(isMvPhase){
-        // MV phase complete
-        setTimeout(function(){ completeMvPhase(mvState.currentPhaseId); }, 500);
-      } else {
-        // Normal campaign phase complete
-        setTimeout(()=>_onCampPhaseComplete(), 500);
-      }
+      setTimeout(()=>_onCampPhaseComplete(), 500);
       return;
     }
     // Still has waves — do normal advance but don't trigger skin unlocks
@@ -378,12 +371,7 @@ advanceWave = function(){
     ann.style.animation='waveAnim 2.5s ease-out forwards';
     setTimeout(()=>ann.style.display='none',2500);
     updateHUD();
-    // HUD update
-    if(!isMvPhase){
-      document.getElementById('campHudWaveNum').textContent=state.wave.toString();
-    } else {
-      document.getElementById('mvHudWaveNum').textContent=Math.min(state.wave,3);
-    }
+    document.getElementById('campHudWaveNum').textContent=state.wave.toString();
     return;
   }
   _campOrigAdvance();
@@ -868,7 +856,7 @@ generateProblem=function(){
       case '+':a=rand(1,max);b=rand(1,max);ans=a+b;break;
       case '-':a=rand(1,max);b=rand(1,a);ans=a-b;break;
       case '×':a=rand(1,12);b=rand(1,12);ans=a*b;break;
-      case '÷':ans=rand(1,12);b=rand(1,12);a=ans*b;break;
+      case '/':ans=rand(1,12);b=rand(1,12);a=ans*b;break;
       default:a=rand(1,max);b=rand(1,max);ans=a+b;
     }
     return{question:`${a} ${op} ${b} = ?`,answer:ans};

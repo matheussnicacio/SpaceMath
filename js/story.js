@@ -201,7 +201,7 @@ function _storyMakeVisual(sl, story, i){
     mainEl.style.position = 'absolute';
     mainEl.style.inset = '0';
     mainEl.style.gap = '0';
-    var equations = ['7 + 5', '12 × 3', '48 ÷ 6', '9 × 4'];
+    var equations = ['7 + 5', '12 × 3', '48 / 6', '9 × 4'];
     [
       {left:'12%', delay:'0s', dur:'3.6s', eq:equations[0]},
       {left:'44%', delay:'0.9s', dur:'4.2s', eq:equations[1]},
@@ -252,7 +252,7 @@ function _storyMakeVisual(sl, story, i){
     mainEl.appendChild(astroW);
   }
   else if(sl.visual === 'shield'){
-    var eqs = story.cls==='hard'?['27 + 34','9 × 8','72 ÷ 8']:story.cls==='medium'?['12 + 8','6 × 4','35 ÷ 5']:['3 + 6','2 × 4','12 ÷ 3'];
+    var eqs = story.cls==='hard'?['27 + 34','9 × 8','72 / 8']:story.cls==='medium'?['12 + 8','6 × 4','35 / 5']:['3 + 6','2 × 4','12 / 3'];
     mainEl.innerHTML =
       '<div style="font-family:\'Press Start 2P\',monospace;font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:3px;margin-bottom:6px;">SISTEMA DE ESCUDO</div>' +
       '<div class="story-shield-demo">' +

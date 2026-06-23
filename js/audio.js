@@ -426,15 +426,14 @@
     return _audioEnabled;
   };
 
-  // Add a mute button to the HUD
+  // Add a mute button (fixed overlay, always visible)
   window.addEventListener('load', function(){
-    var hud = document.getElementById('hudStats')||document.getElementById('statsPanel');
-    if(!hud) return;
+    if(document.getElementById('audioToggleBtn')) return;
     var muteBtn = document.createElement('button');
     muteBtn.id = 'audioToggleBtn';
     muteBtn.title = 'Ativar/Desativar Som';
     muteBtn.innerHTML = '🔊';
-    muteBtn.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:9999;background:rgba(0,20,40,0.85);border:1px solid rgba(0,229,255,0.3);color:#00e5ff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;transition:all 0.2s;';
+    muteBtn.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:10050;background:rgba(0,20,40,0.85);border:1px solid rgba(0,229,255,0.3);color:#00e5ff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:16px;transition:all 0.2s;pointer-events:auto;';
     muteBtn.addEventListener('click', function(){
       var on = window.toggleAudio();
       muteBtn.innerHTML = on ? '🔊' : '🔇';
@@ -450,7 +449,7 @@
 
 // ============================================================
 // SPACEMATH AUDIO ENGINE — EXTENSÃO AVANÇADA
-// Campanha por planeta, Multiverso por dimensão, e
+// Campanha por planeta, e
 // efeito de digitação (typewriter) nas histórias
 // ============================================================
 (function(){
@@ -512,20 +511,8 @@
     }
   };
 
-  // ── Paletas de notas para cada Dimensão do Multiverso ────────
-  var MV_MUSIC = {
-    mv_percent: { scale:[261,311,370,440,370,311,261,220], bpm:118, color:'#f59e0b' },  // % — dourado, flutuante
-    mv_prob:    { scale:[220,261,294,349,294,261,220,196], bpm:115, color:'#06b6d4' },  // probabilidade — ciano, calmo
-    mv_stat:    { scale:[196,220,247,294,330,294,247,220], bpm:112, color:'#10b981' },  // estatística — verde, analítico
-    mv_sqrt:    { scale:[185,207,247,311,370,311,247,207], bpm:116, color:'#f43f5e' },  // raiz — vermelho, preciso
-    mv_med:     { scale:[174,196,233,277,330,277,233,196], bpm:120, color:'#8b5cf6' }   // grandezas — violeta, épico
-  };
-
   // ── Menu da Campanha — ambiente épico de mapa estelar ────────
   var CAMP_MAP_MUSIC = { scale:[131,147,165,196,220,196,165,147], bpm:82 };
-
-  // ── Menu do Multiverso — ambiente dimensional, misterioso ────
-  var MV_MAP_MUSIC = { scale:[116,130,155,185,207,185,155,130], bpm:72 };
 
   // ── Victory fanfare — jingle de vitória por planeta ──────────
   function playVictoryFanfare(planetId){
@@ -647,22 +634,8 @@
       );
     };
 
-    // === 3. _mvStoryTypewrite (histórias do Multiverso) ===
-    var orig_mvTypewrite = window._mvStoryTypewrite;
-    window._mvStoryTypewrite = function(idx){
-      orig_mvTypewrite.apply(this, arguments);
-      _patchTypewriteEl(
-        function(){ return document.getElementById('mvStTxt'+idx); },
-        function(){ return mvState && mvState.storyTwTimer; },
-        function(v){ if(mvState) mvState.storyTwTimer = v; }
-      );
-    };
-
     // ── Hooks de campanha ────────────────────────────────────────
     patchCampaignAudio();
-
-    // ── Hooks de multiverso ─────────────────────────────────────
-    patchMultiversoAudio();
 
   });
 
@@ -776,71 +749,12 @@
     };
   }
 
-  // ── MULTIVERSO: áudio por dimensão ───────────────────────────
-  function patchMultiversoAudio(){
-
-    // Mapa do multiverso — música dimensional misteriosa
-    var origOpenMultiversoMap = window.openMultiversoMap;
-    window.openMultiversoMap = function(){
-      origOpenMultiversoMap.apply(this, arguments);
-      _playMvMapMusic();
-    };
-
-    // Fechar mapa do multiverso
-    var origCloseMultiversoMap = window.closeMultiversoMap;
-    window.closeMultiversoMap = function(){
-      origCloseMultiversoMap.apply(this, arguments);
-      setTimeout(function(){ window.playMusic('menu'); }, 400);
-    };
-
-    // Selecionar dimensão — efeito sonoro de portal + começa música
-    var origSelectMvDimension = window.selectMvDimension;
-    window.selectMvDimension = function(idx){
-      origSelectMvDimension.apply(this, arguments);
-      _sfxPortal();
-    };
-
-    // Iniciar fase do multiverso — música da dimensão específica
-    var origStartMvPhase = window.startMvPhase;
-    window.startMvPhase = function(idx){
-      var ph = typeof MULTIVERSO_PHASES!=='undefined' ? MULTIVERSO_PHASES[idx] : null;
-      origStartMvPhase.apply(this, arguments);
-      if(ph && MV_MUSIC[ph.id]){
-        _stopWithFade(0.4);
-        setTimeout(function(){
-          _playMvDimensionMusic(ph.id);
-        }, 200);
-      }
-    };
-
-    // Vitória de dimensão do multiverso
-    var origCompleteMvPhase = window.completeMvPhase;
-    window.completeMvPhase = function(phId){
-      origCompleteMvPhase.apply(this, arguments);
-      _stopWithFade(0.3);
-      setTimeout(function(){ _sfxDimensionClear(phId); }, 300);
-    };
-
-    // Tela final do multiverso
-    var origShowMvFinal = window._showMvFinal;
-    window._showMvFinal = function(){
-      origShowMvFinal && origShowMvFinal.apply(this, arguments);
-      _stopWithFade(0.5);
-      setTimeout(function(){ _sfxMultiversoComplete(); }, 400);
-    };
-  }
-
   // ── Funções de música específica ─────────────────────────────
 
   function _playCampMapMusic(){
     if(!window._audioEnabled_get()) return;
     if(window._currentMusicCtx_get && window._currentMusicCtx_get()==='campMap') return;
     window._playCustomLoop('campMap', CAMP_MAP_MUSIC.scale, CAMP_MAP_MUSIC.bpm, 0.8, false);
-  }
-
-  function _playMvMapMusic(){
-    if(!window._audioEnabled_get()) return;
-    window._playCustomLoop('mvMap', MV_MAP_MUSIC.scale, MV_MAP_MUSIC.bpm, 1.5, false);
   }
 
   function _playPlanetGameplayMusic(planetId){
@@ -851,84 +765,8 @@
     window._playCustomLoop('planet_'+planetId, p.gameplay.scale, p.gameplay.bpm, 0.6, hasDrums);
   }
 
-  function _playMvDimensionMusic(mvId){
-    if(!window._audioEnabled_get()) return;
-    var m = MV_MUSIC[mvId];
-    if(!m) return;
-    window._playCustomLoop('mv_'+mvId, m.scale, m.bpm, 1.2, false);
-  }
-
   function _stopWithFade(time){
     if(window.stopMusic) window.stopMusic();
-  }
-
-  // ── SFX Especiais ────────────────────────────────────────────
-
-  // Portal do multiverso — woosh tonal
-  function _sfxPortal(){
-    if(!window._audioEnabled_get()) return;
-    var ac = getSharedAC();
-    var t = ac.currentTime;
-    var master = ac.createGain(); master.gain.value=0.3; master.connect(ac.destination);
-    // Sweep tonal ascendente
-    var o = ac.createOscillator(); o.type='sine';
-    o.frequency.setValueAtTime(200,t);
-    o.frequency.exponentialRampToValueAtTime(1200,t+0.6);
-    var g = ac.createGain();
-    g.gain.setValueAtTime(0.6,t);
-    g.gain.exponentialRampToValueAtTime(0.001,t+0.7);
-    o.connect(g); g.connect(master);
-    o.start(t); o.stop(t+0.75);
-    // Reverb sintético (eco)
-    var o2 = ac.createOscillator(); o2.type='triangle';
-    o2.frequency.setValueAtTime(400,t+0.2);
-    o2.frequency.exponentialRampToValueAtTime(800,t+0.7);
-    var g2 = ac.createGain();
-    g2.gain.setValueAtTime(0.2,t+0.2);
-    g2.gain.exponentialRampToValueAtTime(0.001,t+0.9);
-    o2.connect(g2); g2.connect(master);
-    o2.start(t+0.2); o2.stop(t+0.95);
-  }
-
-  // Dimensão liberada — jingle cristalino
-  function _sfxDimensionClear(mvId){
-    if(!window._audioEnabled_get()) return;
-    var ac = getSharedAC();
-    var t = ac.currentTime;
-    var master = ac.createGain(); master.gain.value=0.3; master.connect(ac.destination);
-    var mvCol = MV_MUSIC[mvId];
-    var scale = mvCol ? mvCol.scale : [523,659,784,1047];
-    // Arpegio cristalino
-    scale.slice(0,6).forEach(function(freq,i){
-      var o=ac.createOscillator(); o.type='triangle'; o.frequency.value=freq*2;
-      var g=ac.createGain();
-      g.gain.setValueAtTime(0,t+i*0.08);
-      g.gain.linearRampToValueAtTime(0.5,t+i*0.08+0.02);
-      g.gain.exponentialRampToValueAtTime(0.001,t+i*0.08+0.4);
-      o.connect(g); g.connect(master);
-      o.start(t+i*0.08); o.stop(t+i*0.08+0.45);
-    });
-    // Noise sparkle
-    if(window.sfxCorrect) setTimeout(function(){ window.sfxCorrect(3); }, 600);
-  }
-
-  // Multiverso completo — épico
-  function _sfxMultiversoComplete(){
-    if(!window._audioEnabled_get()) return;
-    var ac = getSharedAC();
-    var t = ac.currentTime;
-    var master = ac.createGain(); master.gain.value=0.35; master.connect(ac.destination);
-    var epic = [261,329,392,523,659,784,1047,784,659,523,392,523];
-    epic.forEach(function(freq,i){
-      var o=ac.createOscillator(); o.type='square'; o.frequency.value=freq;
-      var g=ac.createGain();
-      g.gain.setValueAtTime(0,t+i*0.12);
-      g.gain.linearRampToValueAtTime(0.6,t+i*0.12+0.03);
-      g.gain.exponentialRampToValueAtTime(0.001,t+i*0.12+0.5);
-      o.connect(g); g.connect(master);
-      o.start(t+i*0.12); o.stop(t+i*0.12+0.55);
-    });
-    if(window.sfxCombo) setTimeout(function(){ window.sfxCombo(); }, 800);
   }
 
   // ── API: playCustomLoop ───────────────────────────────────────
@@ -1053,29 +891,44 @@
     return Object.keys(_customLoops)[0] || null;
   };
 
-  // ── Patching de _updateGameMusic para respeitar campanha/MV ──
-  // Durante campanha ou MV, a música por planeta/dimensão deve prevalecer
+  window._stopCustomLoops = _stopCustomLoops;
+
+  // Mute must stop campaign/custom loops; unmute must restore campaign context
+  var _origToggleAudio = window.toggleAudio;
+  window.toggleAudio = function(){
+    var on = _origToggleAudio.apply(this, arguments);
+    if(!on){
+      _stopCustomLoops(0.3);
+    } else {
+      var campMap = document.getElementById('campaignMapScreen');
+      if(campMap && campMap.classList.contains('show')){
+        _playCampMapMusic();
+      } else if(typeof state !== 'undefined' && state.running && state._campPhaseId){
+        _playPlanetGameplayMusic(state._campPhaseId);
+      }
+    }
+    return on;
+  };
+
+  // ── Patching de _updateGameMusic para respeitar campanha ──
+  // Durante campanha, a música por planeta deve prevalecer
   var _origUpdateGameMusic = window._updateGameMusic || function(){};
   window._updateGameMusic_base = _origUpdateGameMusic;
 
-  // Redefinimos a função — se estiver em modo campanha/MV, usa música do planeta
+  // Redefinimos a função — se estiver em modo campanha, usa música do planeta
   // Caso contrário usa o comportamento padrão por onda
-  // (Nota: _origUpdateGameMusic is the version from base engine that reads state.wave)
-  // Para ser seguro, verificamos se há um loop custom ativo de planeta
   var _origAdvWave = window.advanceWave;
   window.advanceWave = function(){
     _origAdvWave && _origAdvWave.apply(this, arguments);
-    // Se estiver em modo campanha, ajusta intensidade mas não troca a música por onda
     var isCamp = typeof campState!=='undefined' && campState.inProgress;
-    var isMv   = typeof mvState!=='undefined' && mvState.inProgress;
-    if(!isCamp && !isMv){
+    if(!isCamp){
       // Modo livre — comportamento padrão (onda define música)
       // já tratado pelo engine base via window._updateGameMusic
     }
-    // Em campanha/MV os loops custom já tocam — não precisa trocar
+    // Em campanha os loops custom já tocam — não precisa trocar
   };
 
-  console.log('[SpaceMath Audio+] Extensão de campanha, multiverso e typewriter carregada.');
+  console.log('[SpaceMath Audio+] Extensão de campanha e typewriter carregada.');
 
 })();
 // ============================================================

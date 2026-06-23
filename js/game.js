@@ -60,7 +60,7 @@ function generateProblem(){
     case '+':a=rand(d.min,d.max);b=rand(d.min,d.max);ans=a+b;break;
     case '-':a=rand(d.min,d.max);b=rand(d.min,a);ans=a-b;break;
     case '×':a=rand(1,12);b=rand(1,12);ans=a*b;break;
-    case '÷':ans=rand(1,12);b=rand(1,12);a=ans*b;break;
+    case '/':ans=rand(1,12);b=rand(1,12);a=ans*b;break;
     default: a=rand(d.min,d.max);b=rand(d.min,d.max);ans=a+b;
   }
   return{question:`${a} ${op} ${b} = ?`,answer:ans};
@@ -227,11 +227,6 @@ function gameOver(){
   }
 }
 
-function closeNewRecord(){
-  document.getElementById('newRecordScreen').classList.add('hidden');
-  document.getElementById('gameOverScreen').classList.remove('hidden');
-  resetGame();
-}
 function closeNewRecordToSkins(){
   document.getElementById('newRecordScreen').classList.add('hidden');
   document.getElementById('gameOverScreen').classList.remove('hidden');
@@ -385,5 +380,46 @@ function closeCredits(){ document.getElementById('creditsScreen').classList.remo
     const el = document.getElementById('menuUfo'+(i+1));
     if(el) el.innerHTML = buildUFOSVG(t);
   });
+})();
+
+(function initMenuSceneEffects(){
+  var sparkleBox = document.getElementById('menuSparkles');
+  var shootBox = document.getElementById('menuShootingStars');
+  if(!sparkleBox && !shootBox) return;
+
+  var sparkleChars = ['✨', '⭐', '·', '✦'];
+  if(sparkleBox){
+    for(var i = 0; i < 18; i++){
+      var sp = document.createElement('span');
+      sp.className = 'menu-sparkle';
+      sp.textContent = sparkleChars[i % sparkleChars.length];
+      sp.style.left = (8 + Math.random() * 84).toFixed(1) + '%';
+      sp.style.top = (10 + Math.random() * 70).toFixed(1) + '%';
+      sp.style.setProperty('--dur', (3 + Math.random() * 4).toFixed(1) + 's');
+      sp.style.setProperty('--dl', (Math.random() * 5).toFixed(1) + 's');
+      sp.style.setProperty('--sz', (10 + Math.random() * 10).toFixed(0) + 'px');
+      sparkleBox.appendChild(sp);
+    }
+  }
+
+  function spawnShootingStar(){
+    if(!shootBox || document.hidden) return;
+    var star = document.createElement('div');
+    star.className = 'menu-shooting-star';
+    star.style.left = (5 + Math.random() * 70).toFixed(1) + '%';
+    star.style.top = (5 + Math.random() * 45).toFixed(1) + '%';
+    star.style.setProperty('--angle', (-25 - Math.random() * 25).toFixed(0) + 'deg');
+    star.style.setProperty('--dur', (0.8 + Math.random() * 0.6).toFixed(2) + 's');
+    star.style.setProperty('--len', (40 + Math.random() * 50).toFixed(0) + 'px');
+    shootBox.appendChild(star);
+    star.addEventListener('animationend', function(){ star.remove(); });
+  }
+
+  if(shootBox){
+    spawnShootingStar();
+    setInterval(function(){
+      if(Math.random() < 0.55) spawnShootingStar();
+    }, 2800);
+  }
 })();
 

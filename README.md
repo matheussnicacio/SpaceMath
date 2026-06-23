@@ -55,19 +55,6 @@ Percorra o **Sistema Solar** em 8 planetas com desafios únicos, trilhas sonoras
 | ♆ Netuno | Netuniano |
 | ✦ Plutão | Defensor Final |
 
-### 🌀 Multiverso — Matemática Avançada
-5 dimensões paralelas com operações especiais do **6º ano**:
-
-| Dimensão | Operação |
-|---|---|
-| 💯 Dimensão % | Porcentagem |
-| 🎲 Dimensão P | Probabilidade |
-| 📊 Dimensão σ | Estatística (média) |
-| 🔲 Dimensão √ | Raiz Quadrada |
-| 📏 Dimensão 📏 | Grandezas e Medidas |
-
----
-
 ## 🎯 Dificuldades
 
 | Dificuldade | Números | Vidas | Velocidade | Spawn |
@@ -124,7 +111,6 @@ SpaceMath/
     ├── abilities.js    # Habilidades PRO e patches de funções
     ├── story.js        # Tela de prólogo/história
     ├── campaign.js     # Modo Campanha (Alex Lunar)
-    ├── multiverse.js   # Modo Multiverso
     └── audio.js        # Engine de áudio (Web Audio API)
 ```
 

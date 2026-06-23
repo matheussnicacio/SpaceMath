@@ -163,19 +163,27 @@ function resumeGame(){
   gameLoop=setInterval(()=>{if(!state.running||state.paused)return;moveUFOs();tickWave();},33);
   spawnLoop=setInterval(spawnUFO,state.spawnInterval);
 }
-function restartGame(){
-  document.getElementById('pauseScreen').classList.add('hidden');
+function _restartCurrentGame(){
   state.ufos.forEach(u=>{try{u.el.remove()}catch(e){}});
   state.ufos=[];
   clearInterval(gameLoop); gameLoop=null;
   clearInterval(spawnLoop); spawnLoop=null;
-  // Se estiver no modo campanha, reinicia a fase atual mantendo o tema do planeta
+  if(shootingStarInterval){ clearInterval(shootingStarInterval); shootingStarInterval=null; }
   const campPhaseId = state._campPhaseId;
   if(campPhaseId && typeof campState !== 'undefined' && campState.inProgress){
     const ph = CAMPAIGN_PHASES.find(p => p.id === campPhaseId);
     if(ph){ _startCampGamePhase(ph); return; }
   }
   startGame(state.difficulty);
+}
+function restartGame(){
+  document.getElementById('pauseScreen').classList.add('hidden');
+  _restartCurrentGame();
+}
+function replayGame(){
+  document.getElementById('gameOverScreen').classList.add('hidden');
+  document.getElementById('newRecordScreen').classList.add('hidden');
+  _restartCurrentGame();
 }
 function goToMainMenu(){
   state.running=false; state.paused=false;
